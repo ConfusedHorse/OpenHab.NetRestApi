@@ -49,7 +49,6 @@
     <Compile Include="Helpers\EnumerableExtension.cs" />
     <Compile Include="Helpers\NewtonsoftJsonSerializer.cs" />
     <Compile Include="Models\Binding.cs" />
-    <Compile Include="Models\BindingConfiguration.cs" />
     <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\RequestHeader.cs" />
     <Compile Include="Models\StatusInfo.cs" />
