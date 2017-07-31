@@ -40,12 +40,12 @@ namespace OpenHAB.NetRestApi.Client
             //var resp = openHab.ThingService.CreateThing(thingToChange);
 
             //var things = openHab.ThingService.GetThings();
-            //var yahooweather = things.FirstOrDefault(t => t.Label.Contains("hue"));
-            //var channels = yahooweather?.Channels;
+            //var hueThing = things.FirstOrDefault(t => t.Label.Contains("hue"));
+            //var channels = hueThing?.Channels;
             //var firstChannel = channels?.FirstOrDefault();
 
-            //var deleteThing = openHab.ThingService.DeleteChannelLink(yahooweather, firstChannel);
-            //var createThing = openHab.ThingService.CreateChannelLink(yahooweather, firstChannel);
+            //var deleteThing = openHab.ThingService.DeleteChannelLink(hueThing, firstChannel);
+            //var createThing = openHab.ThingService.CreateChannelLink(hueThing, firstChannel);
 
             Console.ReadLine();
         }

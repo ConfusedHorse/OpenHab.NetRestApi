@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using OpenHAB.NetRestApi.Helpers;
 using OpenHAB.NetRestApi.Models.Events;
 using OpenHAB.NetRestApi.RestApi;
 
@@ -43,12 +44,16 @@ namespace OpenHAB.NetRestApi.Services
                             var timeOccured = DateTime.Now;
 
                             //adjust json format
-                            var capturedData = data.Value.Replace(@"\", string.Empty);
-                            var fixedData = capturedData.Replace(@"""{", @"{").Replace(@"}""", @"}");
 
-                            var type = typeTemplate.Match(fixedData).Groups[1].Value;
+                            var formattedJson = JsonHelper.FormatJson(data.Value);
 
-                            var eventObject = CreateEventObject(fixedData, type, timeOccured);
+                            //var capturedData = data.Value.Replace(@"\", string.Empty); //removed delimiter bevore quotes
+                            //var fixedData = capturedData.Replace(@"""{", @"{").Replace(@"}""", @"}"); //removed quotes around brackets
+                            //var cleanedData = fixedData.Replace(@"""""", @""""); //removed double quotes
+
+                            var type = typeTemplate.Match(formattedJson).Groups[1].Value;
+
+                            var eventObject = CreateEventObject(formattedJson, type, timeOccured);
                             OpenHabBusEventOccured?.Invoke(OpenHab.RestClient, eventObject);
                         }
                     }

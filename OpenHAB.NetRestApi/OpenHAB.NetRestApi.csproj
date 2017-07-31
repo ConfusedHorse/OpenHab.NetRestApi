@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\EnumerableExtension.cs" />
+    <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\NewtonsoftJsonSerializer.cs" />
     <Compile Include="Models\Binding.cs" />
     <Compile Include="Models\Channel.cs" />
