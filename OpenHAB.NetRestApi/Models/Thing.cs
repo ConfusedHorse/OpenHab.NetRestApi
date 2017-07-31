@@ -11,8 +11,8 @@ namespace OpenHAB.NetRestApi.Models
         [JsonProperty("label")]
         public string Label { get; set; }
 
-        //[JsonProperty("bridgeUID")]
-        //public string BridgeUid { get; set; }
+        [JsonProperty("bridgeUID")]
+        public string BridgeUid { get; set; }
 
         [JsonProperty("configuration")]
         public object Configuration { get; set; }

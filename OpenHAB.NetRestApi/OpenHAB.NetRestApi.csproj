@@ -49,8 +49,17 @@
     <Compile Include="Helpers\EnumerableExtension.cs" />
     <Compile Include="Helpers\NewtonsoftJsonSerializer.cs" />
     <Compile Include="Models\Binding.cs" />
-    <Compile Include="Models\BindingConfiguration.cs" />
     <Compile Include="Models\Channel.cs" />
+    <Compile Include="Models\Events\Event.cs" />
+    <Compile Include="Models\Events\ItemCommandEvent.cs" />
+    <Compile Include="Models\Events\Payloads\ItemCommandPayload.cs" />
+    <Compile Include="Models\Events\Payloads\ThingStatusInfoPayload.cs" />
+    <Compile Include="Models\Events\Payloads\ItemStatePayload.cs" />
+    <Compile Include="Models\Events\ThingStatusInfoEvent.cs" />
+    <Compile Include="Models\Events\ItemStateChangedEvent.cs" />
+    <Compile Include="Models\Events\ItemStateEvent.cs" />
+    <Compile Include="Models\Events\Payloads\ItemStateChangedPayload.cs" />
+    <Compile Include="Models\Events\UnknownEvent.cs" />
     <Compile Include="Models\RequestHeader.cs" />
     <Compile Include="Models\StatusInfo.cs" />
     <Compile Include="Models\Thing.cs" />
@@ -63,6 +72,7 @@
     <Compile Include="Services\ConfigDescriptionService.cs" />
     <Compile Include="Services\DefaultService.cs" />
     <Compile Include="Services\DiscoveryService.cs" />
+    <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\ExtensionService.cs" />
     <Compile Include="Services\InboxService.cs" />
     <Compile Include="Services\ItemService.cs" />

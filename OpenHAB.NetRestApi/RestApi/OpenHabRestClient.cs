@@ -20,6 +20,7 @@ namespace OpenHAB.NetRestApi.RestApi
         private ConfigDescriptionService _configDescriptionService;
         private DefaultService _defaultService;
         private DiscoveryService _discoveryService;
+        private EventService _eventService;
         private ExtensionService _extensionService;
         private InboxService _inboxService;
         private ItemService _itemService;
@@ -66,6 +67,7 @@ namespace OpenHAB.NetRestApi.RestApi
         public ConfigDescriptionService ConfigDescriptionService => _configDescriptionService ?? (_configDescriptionService = new ConfigDescriptionService());
         public DefaultService DefaultService => _defaultService ?? (_defaultService = new DefaultService());
         public DiscoveryService DiscoveryService => _discoveryService ?? (_discoveryService = new DiscoveryService());
+        public EventService EventService => _eventService ?? (_eventService = new EventService());
         public ExtensionService ExtensionService => _extensionService ?? (_extensionService = new ExtensionService());
         public InboxService InboxService => _inboxService ?? (_inboxService = new InboxService());
         public ItemService ItemService => _itemService ?? (_itemService = new ItemService());
