@@ -52,6 +52,7 @@
     <Compile Include="Models\Binding.cs" />
     <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\ChannelType.cs" />
+    <Compile Include="Models\ConfigDescriptor.cs" />
     <Compile Include="Models\FilterCriteria.cs" />
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\ParameterGroup.cs" />

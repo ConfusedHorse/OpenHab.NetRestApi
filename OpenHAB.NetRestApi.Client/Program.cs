@@ -16,8 +16,8 @@ namespace OpenHAB.NetRestApi.Client
         {
             var openHab = OpenHab.CreateRestClient(Url);
 
-            var channelTypes = openHab.ChannelTypeService.GetChannelTypes();
-            var channelType = openHab.ChannelTypeService.GetChannelType(channelTypes.FirstOrDefault()?.Uid);
+            var configDescriptors = openHab.ConfigDescriptionService.GetConfigDescriptors();
+            var configDescriptor = openHab.ConfigDescriptionService.GetConfigDescriptor(configDescriptors.FirstOrDefault()?.Uri);
 
             Console.ReadLine();
         }
