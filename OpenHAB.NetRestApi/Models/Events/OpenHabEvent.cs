@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace OpenHAB.NetRestApi.Models.Events
 {
-    public class Event : EventArgs
+    public class OpenHabEvent : EventArgs
     {
         [JsonProperty("topic")]
         public string Topic { get; set; }

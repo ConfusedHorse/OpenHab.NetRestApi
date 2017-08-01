@@ -14,12 +14,19 @@ namespace OpenHAB.NetRestApi.Services
 {
     public class EventService
     {
-        public delegate void EventHandler(object sender, Event eventObject);
-        public event EventHandler OpenHabBusEventOccured;
+        #region EventHandlers
+        
+        public event UnknownEventHandler UnknownEventOccured;
+        public event ItemStateEventHandler ItemStateEventOccured;
+        public event ItemStateChangedEventHandler ItemStateChanged;
+        public event ThingStatusInfoEventHandler ThingStatusInfoEventOccured;
+        public event ItemCommandEventHandler ItemCommandEventOccured;
+
+        #endregion
 
         /// <summary>
         /// Initializes an asynchronous Rest prompt which is read and interpreted.
-        /// Results can be aquired by listening to the <see cref="OpenHabBusEventOccured"/> event
+        /// Results can be aquired by listening to the relevant event
         /// </summary>
         public async void InitializeAsync()
         {
@@ -34,7 +41,6 @@ namespace OpenHAB.NetRestApi.Services
                     using (var reader = new StreamReader(stream))
                     {
                         var dataTemplate = new Regex(@"data:\s({.*})");
-                        var typeTemplate = new Regex(@",""type"":""(.*)""}");
                         while (!reader.EndOfStream)
                         {
                             var currentLine = reader.ReadLine();
@@ -42,56 +48,55 @@ namespace OpenHAB.NetRestApi.Services
 
                             var data = dataTemplate.Match(currentLine).Groups[1];
                             if (!data.Success) continue;
-                            var timeOccured = DateTime.Now;
 
-                            //adjust json format
-                            var formattedJson = JsonHelper.Format(data.Value);
-
-                            var type = typeTemplate.Match(formattedJson).Groups[1].Value;
-
-                            var eventObject = CreateEventObject(formattedJson, type, timeOccured);
-                            RaiseEvent(eventObject);
+                            RaiseEvent(data.Value);
                         }
                     }
                 }
             });
         }
 
-        private void RaiseEvent(Event eventObject)
+        private void RaiseEvent(string data)
         {
-#if DEBUG
-            Debug.WriteLine($"{eventObject.Occured}\t\t{eventObject.Target}\t\t{eventObject.Type}");
-#endif
-            OpenHabBusEventOccured?.Invoke(OpenHab.RestClient, eventObject);
-        }
+            var typeTemplate = new Regex(@",""type"":""(.*)""}");
 
-        private static Event CreateEventObject(string fixedData, string type, DateTime timeOccured)
-        {
-            //TODO this list is incomplete
-            var targetTemplate = new Regex(@"smarthome/(.*)/(.*)/");
-            Event result;
+            var json = Json.Fix(data);
+            var type = typeTemplate.Match(data).Groups[1].Value;
+
             switch (type)
             {
                 case "ItemStateEvent":
-                    result = JsonConvert.DeserializeObject<ItemStateEvent>(fixedData);
+                    var itemStateOpenHabEvent = BuildEvent<ItemStateEvent>(json);
+                    ItemStateEventOccured?.Invoke(OpenHab.RestClient, itemStateOpenHabEvent);
                     break;
                 case "ItemStateChangedEvent":
-                    result = JsonConvert.DeserializeObject<ItemStateChangedEvent>(fixedData);
+                    var itemStateChangedEvent = BuildEvent<ItemStateChangedEvent>(json);
+                    ItemStateChanged?.Invoke(OpenHab.RestClient, itemStateChangedEvent);
                     break;
                 case "ThingStatusInfoEvent":
-                    result = JsonConvert.DeserializeObject<ThingStatusInfoEvent>(fixedData);
+                    var thingStatusInfoOpenHabEvent = BuildEvent<ThingStatusInfoEvent>(json);
+                    ThingStatusInfoEventOccured?.Invoke(OpenHab.RestClient, thingStatusInfoOpenHabEvent);
                     break;
                 case "ItemCommandEvent":
-                    result = JsonConvert.DeserializeObject<ItemCommandEvent>(fixedData);
+                    var itemCommandOpenHabEvent = BuildEvent<ItemCommandEvent>(json);
+                    ItemCommandEventOccured?.Invoke(OpenHab.RestClient, itemCommandOpenHabEvent);
                     break;
                 default:
-                    result = JsonConvert.DeserializeObject<UnknownEvent>(fixedData);
+                    var unknownEvent = BuildEvent<UnknownEvent>(json);
+                    UnknownEventOccured?.Invoke(OpenHab.RestClient, unknownEvent);
                     break;
             }
+        }
 
-            result.Target = targetTemplate.Match(result.Topic).Groups[2].Value;
-            result.Occured = timeOccured;
-            return result;
+        private static T BuildEvent<T>(string json)
+        {
+            var timeOccured = DateTime.Now;
+            var targetTemplate = new Regex(@"smarthome/(.*)/(.*)/");
+
+            dynamic eventObject = JsonConvert.DeserializeObject<T>(json);
+            eventObject.Target = targetTemplate.Match(eventObject.Topic).Groups[2].Value;
+            eventObject.Occured = timeOccured;
+            return eventObject;
         }
     }
 }

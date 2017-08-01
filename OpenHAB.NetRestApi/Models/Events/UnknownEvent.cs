@@ -2,9 +2,11 @@
 
 namespace OpenHAB.NetRestApi.Models.Events
 {
-    public class UnknownEvent : Event
+    public delegate void UnknownEventHandler(object sender, UnknownEvent eventObject);
+
+    public class UnknownEvent : OpenHabEvent
     {
         [JsonProperty("payload")]
-        public string Payload { get; set; }
+        public object Payload { get; set; }
     }
 }

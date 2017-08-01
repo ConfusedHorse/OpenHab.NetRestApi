@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\EnumerableExtension.cs" />
-    <Compile Include="Helpers\JsonHelper.cs" />
+    <Compile Include="Helpers\Json.cs" />
     <Compile Include="Helpers\NewtonsoftJsonSerializer.cs" />
     <Compile Include="Models\Binding.cs" />
     <Compile Include="Models\Channel.cs" />
@@ -62,7 +62,7 @@
     <Compile Include="Models\ParameterOption.cs" />
     <Compile Include="Models\StateOption.cs" />
     <Compile Include="Models\StateDescription.cs" />
-    <Compile Include="Models\Events\Event.cs" />
+    <Compile Include="Models\Events\OpenHabEvent.cs" />
     <Compile Include="Models\Events\ItemCommandEvent.cs" />
     <Compile Include="Models\Events\Payloads\ItemCommandPayload.cs" />
     <Compile Include="Models\Events\Payloads\ThingStatusInfoPayload.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Linq;
+using System.Diagnostics;
+using OpenHAB.NetRestApi.Models.Events;
 using OpenHAB.NetRestApi.RestApi;
 
 namespace OpenHAB.NetRestApi.Client
@@ -16,15 +17,31 @@ namespace OpenHAB.NetRestApi.Client
         static void Main(string[] args)
         {
             var openHab = OpenHab.CreateRestClient(Url, StartEventService);
-            var extensionService = openHab.ExtensionService;
+            var eventService = openHab.EventService;
 
-            var extensions = extensionService.GetExtensions();
-            var anExtension = extensionService.GetExtension(extensions.FirstOrDefault()?.Id);
-
-            var installExtension = extensionService.InstallExtension(anExtension.Id);
-            var uninstallExtension = extensionService.UninstallExtension(anExtension.Id);
+            eventService.ItemStateChanged += EventServiceOnItemStateChanged;
+            eventService.UnknownEventOccured += EventServiceOnUnknownEventOccured;
+            eventService.ItemCommandEventOccured += EventServiceOnItemCommandEventOccured;
 
             Console.ReadLine();
+        }
+
+        private static void EventServiceOnItemCommandEventOccured(object sender, ItemCommandEvent eventObject)
+        {
+            Debug.WriteLine(
+                $"{eventObject.Occured}\t\t{eventObject.Type}:\t\t{eventObject.CommandType} was called with Parameter {eventObject.CommandValue}");
+        }
+
+        private static void EventServiceOnUnknownEventOccured(object sender, UnknownEvent eventObject)
+        {
+            Debug.WriteLine(
+                $"{eventObject.Occured}\t\t{eventObject.Type}:\t\t{eventObject.Target}");
+        }
+
+        private static void EventServiceOnItemStateChanged(object sender, ItemStateChangedEvent eventObject)
+        {
+            Debug.WriteLine(
+                $"{eventObject.Occured}\t\t{eventObject.Type}:\t\t{eventObject.Target} changed from {eventObject.OldStateValue} to {eventObject.StateValue}");
         }
     }
 }
