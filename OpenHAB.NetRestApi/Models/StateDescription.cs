@@ -15,7 +15,7 @@ namespace OpenHAB.NetRestApi.Models
         public bool ReadOnly { get; set; }
 
         [JsonProperty("options")]
-        public List<StateOption> Options { get; set; }
+        public List<Option> Options { get; set; }
 
         [JsonProperty("step")]
         public int? Step { get; set; }

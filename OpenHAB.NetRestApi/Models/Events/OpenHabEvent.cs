@@ -13,6 +13,8 @@ namespace OpenHAB.NetRestApi.Models.Events
 
         public string Target { get; set; }
 
+        public string Action { get; set; }
+
         public DateTime Occured { get; set; }
     }
 }

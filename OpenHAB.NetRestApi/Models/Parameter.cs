@@ -66,7 +66,7 @@ namespace OpenHAB.NetRestApi.Models
         public string UnitLabel { get; set; }
 
         [JsonProperty("options")]
-        public List<ParameterOption> Options { get; set; }
+        public List<Option> Options { get; set; }
 
         [JsonProperty("filterCriteria")]
         public List<FilterCriteria> FilterCriteria { get; set; }

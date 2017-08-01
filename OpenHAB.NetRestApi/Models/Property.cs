@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace OpenHAB.NetRestApi.Models.Events.Payloads
+namespace OpenHAB.NetRestApi.Models
 {
-    public class ItemStateChangedPayload
+    public class Property
     {
         [JsonProperty("type")]
         public string Type { get; set; }

@@ -9,5 +9,8 @@ namespace OpenHAB.NetRestApi.Models
 
         [JsonProperty("statusDetail")]
         public string StatusDetail { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
     }
 }

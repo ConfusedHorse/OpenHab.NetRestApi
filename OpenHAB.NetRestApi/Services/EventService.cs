@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -16,11 +15,31 @@ namespace OpenHAB.NetRestApi.Services
     {
         #region EventHandlers
         
-        public event UnknownEventHandler UnknownEventOccured;
         public event ItemStateEventHandler ItemStateEventOccured;
         public event ItemStateChangedEventHandler ItemStateChanged;
-        public event ThingStatusInfoEventHandler ThingStatusInfoEventOccured;
         public event ItemCommandEventHandler ItemCommandEventOccured;
+        public event ItemAddedEventHandler ItemAdded;
+        public event ItemRemovedEventHandler ItemRemoved;
+        public event ItemChannelLinkAddedEventHandler ItemChannelLinkAdded;
+        public event ItemChannelLinkRemovedEventHandler ItemChannelLinkRemoved;
+
+        public event ThingStatusInfoEventHandler ThingStatusInfoEventOccured;
+        public event ThingStatusInfoChangedEventHandler ThingStatusInfoChanged;
+        public event ThingAddedEventHandler ThingAdded;
+        public event ThingUpdatedEventHandler ThingUpdated;
+        public event ThingRemovedEventHandler ThingRemoved;
+
+        public event InboxAddedEventHandler InboxAdded;
+        public event InboxRemovedEventHandler InboxRemoved;
+
+        public event RuleStatusInfoEventHandler RuleStatusInfoEventOccured;
+        public event RuleAddedEventHandler RuleAdded;
+        public event RuleUpdatedEventHandler RuleUpdated;
+        public event RuleRemovedEventHandler RuleRemoved;
+
+        public event ConfigStatusInfoEventHandler ConfigStatusInfoEventOccured;
+        public event PlayUrlEventHandler PlayUrlEventOccured;
+        public event UnknownEventHandler UnknownEventOccured;
 
         #endregion
 
@@ -63,38 +82,127 @@ namespace OpenHAB.NetRestApi.Services
             var json = Json.Fix(data);
             var type = typeTemplate.Match(data).Groups[1].Value;
 
-            switch (type)
+            switch (type) //TODO this is not a complete list of events
             {
+                #region Items
+
                 case "ItemStateEvent":
-                    var itemStateOpenHabEvent = BuildEvent<ItemStateEvent>(json);
-                    ItemStateEventOccured?.Invoke(OpenHab.RestClient, itemStateOpenHabEvent);
+                    var itemStateEvent = AssembleEvent<ItemStateEvent>(json);
+                    ItemStateEventOccured?.Invoke(OpenHab.RestClient, itemStateEvent);
                     break;
                 case "ItemStateChangedEvent":
-                    var itemStateChangedEvent = BuildEvent<ItemStateChangedEvent>(json);
+                    var itemStateChangedEvent = AssembleEvent<ItemStateChangedEvent>(json);
                     ItemStateChanged?.Invoke(OpenHab.RestClient, itemStateChangedEvent);
                     break;
-                case "ThingStatusInfoEvent":
-                    var thingStatusInfoOpenHabEvent = BuildEvent<ThingStatusInfoEvent>(json);
-                    ThingStatusInfoEventOccured?.Invoke(OpenHab.RestClient, thingStatusInfoOpenHabEvent);
-                    break;
                 case "ItemCommandEvent":
-                    var itemCommandOpenHabEvent = BuildEvent<ItemCommandEvent>(json);
-                    ItemCommandEventOccured?.Invoke(OpenHab.RestClient, itemCommandOpenHabEvent);
+                    var itemCommandEvent = AssembleEvent<ItemCommandEvent>(json);
+                    ItemCommandEventOccured?.Invoke(OpenHab.RestClient, itemCommandEvent);
+                    break;
+                case "ItemAddedEvent":
+                    var itemAddedEvent = AssembleEvent<ItemAddedEvent>(json);
+                    ItemAdded?.Invoke(OpenHab.RestClient, itemAddedEvent);
+                    break;
+                case "ItemRemovedEvent":
+                    var itemRemovedEvent = AssembleEvent<ItemRemovedEvent>(json);
+                    ItemRemoved?.Invoke(OpenHab.RestClient, itemRemovedEvent);
+                    break;
+                case "ItemChannelLinkAddedEvent":
+                    var itemChannelLinkAddedEvent = AssembleEvent<ItemChannelLinkAddedEvent>(json);
+                    ItemChannelLinkAdded?.Invoke(OpenHab.RestClient, itemChannelLinkAddedEvent);
+                    break;
+                case "ItemChannelLinkRemovedEvent":
+                    var itemChannelLinkRemovedEvent = AssembleEvent<ItemChannelLinkRemovedEvent>(json);
+                    ItemChannelLinkRemoved?.Invoke(OpenHab.RestClient, itemChannelLinkRemovedEvent);
+                    break;
+
+                #endregion
+
+                #region Things
+
+                case "ThingStatusInfoEvent":
+                    var thingStatusInfoEvent = AssembleEvent<ThingStatusInfoEvent>(json);
+                    ThingStatusInfoEventOccured?.Invoke(OpenHab.RestClient, thingStatusInfoEvent);
+                    break;
+                case "ThingStatusInfoChangedEvent":
+                    var thingStatusInfoChangedEvent = AssembleEvent<ThingStatusInfoChangedEvent>(json);
+                    ThingStatusInfoChanged?.Invoke(OpenHab.RestClient, thingStatusInfoChangedEvent);
+                    break;
+                case "ThingAddedEvent":
+                    var thingAddedEvent = AssembleEvent<ThingAddedEvent>(json);
+                    ThingAdded?.Invoke(OpenHab.RestClient, thingAddedEvent);
+                    break;
+                case "ThingUpdatedEvent":
+                    var thingUpdatedEvent = AssembleEvent<ThingUpdatedEvent>(json);
+                    ThingUpdated?.Invoke(OpenHab.RestClient, thingUpdatedEvent);
+                    break;
+                case "ThingRemovedEvent":
+                    var thingRemovedEvent = AssembleEvent<ThingRemovedEvent>(json);
+                    ThingRemoved?.Invoke(OpenHab.RestClient, thingRemovedEvent);
+                    break;
+
+                #endregion
+
+                #region Inbox
+
+                case "InboxAddedEvent":
+                    var inboxAddedEvent = AssembleEvent<InboxAddedEvent>(json);
+                    InboxAdded?.Invoke(OpenHab.RestClient, inboxAddedEvent);
+                    break;
+                case "InboxRemovedEvent":
+                    var inboxRemovedEvent = AssembleEvent<InboxRemovedEvent>(json);
+                    InboxRemoved?.Invoke(OpenHab.RestClient, inboxRemovedEvent);
+                    break;
+
+                #endregion
+
+                #region Rules
+
+                case "RuleStatusInfoEvent":
+                    var ruleStatusInfo = AssembleEvent<RuleStatusInfoEvent>(json);
+                    RuleStatusInfoEventOccured?.Invoke(OpenHab.RestClient, ruleStatusInfo);
+                    break;
+                case "RuleAddedEvent":
+                    var ruleAddedEvent = AssembleEvent<RuleAddedEvent>(json);
+                    RuleAdded?.Invoke(OpenHab.RestClient, ruleAddedEvent);
+                    break;
+                case "RuleUpdatedEvent":
+                    var ruleUpdatedEvent = AssembleEvent<RuleUpdatedEvent>(json);
+                    RuleUpdated?.Invoke(OpenHab.RestClient, ruleUpdatedEvent);
+                    break;
+                case "RuleRemovedEvent":
+                    var ruleRemovedEvent = AssembleEvent<RuleRemovedEvent>(json);
+                    RuleRemoved?.Invoke(OpenHab.RestClient, ruleRemovedEvent);
+                    break;
+
+                #endregion
+
+                #region Miscellaneous
+
+                case "ConfigStatusInfoEvent":
+                    var configStatusInfoEvent = AssembleEvent<ConfigStatusInfoEvent>(json);
+                    ConfigStatusInfoEventOccured?.Invoke(OpenHab.RestClient, configStatusInfoEvent);
+                    break;
+                case "PlayURLEvent":
+                    var playUrlEvent = AssembleEvent<PlayUrlEvent>(json);
+                    PlayUrlEventOccured?.Invoke(OpenHab.RestClient, playUrlEvent);
                     break;
                 default:
-                    var unknownEvent = BuildEvent<UnknownEvent>(json);
+                    var unknownEvent = AssembleEvent<UnknownEvent>(json);
                     UnknownEventOccured?.Invoke(OpenHab.RestClient, unknownEvent);
                     break;
+
+                #endregion
             }
         }
 
-        private static T BuildEvent<T>(string json)
+        private static T AssembleEvent<T>(string json)
         {
             var timeOccured = DateTime.Now;
-            var targetTemplate = new Regex(@"smarthome/(.*)/(.*)/");
+            var targetTemplate = new Regex(@"smarthome/(.*)/(.*)/(.*)"); // group/target/action
 
             dynamic eventObject = JsonConvert.DeserializeObject<T>(json);
             eventObject.Target = targetTemplate.Match(eventObject.Topic).Groups[2].Value;
+            eventObject.Action = targetTemplate.Match(eventObject.Topic).Groups[3].Value;
             eventObject.Occured = timeOccured;
             return eventObject;
         }

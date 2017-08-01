@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using OpenHAB.NetRestApi.Models.Events.Payloads;
 
 namespace OpenHAB.NetRestApi.Models.Events
 {
@@ -8,13 +7,15 @@ namespace OpenHAB.NetRestApi.Models.Events
     public class ThingStatusInfoEvent : OpenHabEvent
     {
         [JsonProperty("payload")]
-        public ThingStatusInfoPayload Payload { get; set; }
+        public StatusInfo Payload { get; set; }
 
         #region Payload Parameters
 
         public string Status => Payload.Status;
         
         public string StatusDetail => Payload.StatusDetail;
+
+        public string Description => Payload.Description;
 
         #endregion
     }

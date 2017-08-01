@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Newtonsoft.Json;
 using OpenHAB.NetRestApi.Models.Events;
 using OpenHAB.NetRestApi.RestApi;
 
@@ -18,30 +19,42 @@ namespace OpenHAB.NetRestApi.Client
         {
             var openHab = OpenHab.CreateRestClient(Url, StartEventService);
             var eventService = openHab.EventService;
+            
+            eventService.ItemStateEventOccured += DebugAnyEventOccured;
+            eventService.ItemStateChanged += DebugAnyEventOccured;
+            eventService.ItemCommandEventOccured += DebugAnyEventOccured;
+            eventService.ItemAdded += DebugAnyEventOccured;
+            eventService.ItemRemoved += DebugAnyEventOccured;
+            eventService.ItemChannelLinkAdded += DebugAnyEventOccured;
+            eventService.ItemChannelLinkRemoved += DebugAnyEventOccured;
 
-            eventService.ItemStateChanged += EventServiceOnItemStateChanged;
-            eventService.UnknownEventOccured += EventServiceOnUnknownEventOccured;
-            eventService.ItemCommandEventOccured += EventServiceOnItemCommandEventOccured;
+            eventService.ThingStatusInfoEventOccured += DebugAnyEventOccured;
+            eventService.ThingStatusInfoChanged += DebugAnyEventOccured;
+            eventService.ThingUpdated += DebugAnyEventOccured;
+            eventService.ThingRemoved += DebugAnyEventOccured;
+
+            eventService.InboxAdded += DebugAnyEventOccured;
+            eventService.InboxRemoved += DebugAnyEventOccured;
+
+            eventService.RuleStatusInfoEventOccured += DebugAnyEventOccured;
+            eventService.RuleAdded += DebugAnyEventOccured;
+            eventService.RuleUpdated += DebugAnyEventOccured;
+            eventService.RuleRemoved += DebugAnyEventOccured;
+
+            eventService.ConfigStatusInfoEventOccured += DebugAnyEventOccured;
+            eventService.PlayUrlEventOccured += DebugAnyEventOccured;
+            eventService.UnknownEventOccured += DebugAnyEventOccured;
 
             Console.ReadLine();
         }
 
-        private static void EventServiceOnItemCommandEventOccured(object sender, ItemCommandEvent eventObject)
+        private static void DebugAnyEventOccured(object sender, OpenHabEvent eventObject)
         {
             Debug.WriteLine(
-                $"{eventObject.Occured}\t\t{eventObject.Type}:\t\t{eventObject.CommandType} was called with Parameter {eventObject.CommandValue}");
-        }
-
-        private static void EventServiceOnUnknownEventOccured(object sender, UnknownEvent eventObject)
-        {
-            Debug.WriteLine(
-                $"{eventObject.Occured}\t\t{eventObject.Type}:\t\t{eventObject.Target}");
-        }
-
-        private static void EventServiceOnItemStateChanged(object sender, ItemStateChangedEvent eventObject)
-        {
-            Debug.WriteLine(
-                $"{eventObject.Occured}\t\t{eventObject.Type}:\t\t{eventObject.Target} changed from {eventObject.OldStateValue} to {eventObject.StateValue}");
+                $"{eventObject.Occured}\t\t{eventObject.Type}:\t\t{eventObject.Target}({eventObject.Action})");
+            object payload = ((dynamic) eventObject).Payload;
+            Debug.WriteLine(JsonConvert.SerializeObject(payload));
+            Debug.WriteLine(string.Empty);
         }
     }
 }
