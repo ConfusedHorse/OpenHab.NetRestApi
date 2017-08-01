@@ -16,12 +16,13 @@ namespace OpenHAB.NetRestApi.Client
         static void Main(string[] args)
         {
             var openHab = OpenHab.CreateRestClient(Url, StartEventService);
-            var voiceService = openHab.VoiceService;
+            var extensionService = openHab.ExtensionService;
 
-            var voiceInterpreters = voiceService.GetInterpreters();
-            var voiceInterpreter = voiceService.GetInterpreter(voiceInterpreters.FirstOrDefault(vi => vi.Id == "system")?.Id);
+            var extensions = extensionService.GetExtensions();
+            var anExtension = extensionService.GetExtension(extensions.FirstOrDefault()?.Id);
 
-            var sendMessageResult = voiceService.SendMessage(voiceInterpreter.Id, "Das ist ein Test.", "de");
+            var installExtension = extensionService.InstallExtension(anExtension.Id);
+            var uninstallExtension = extensionService.UninstallExtension(anExtension.Id);
 
             Console.ReadLine();
         }
