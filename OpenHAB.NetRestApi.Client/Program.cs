@@ -15,10 +15,10 @@ namespace OpenHAB.NetRestApi.Client
         static void Main(string[] args)
         {
             var openHab = OpenHab.CreateRestClient(Url, StartEventService);
-            var inboxService = openHab.InboxService;
+            var linkService = openHab.LinkService;
 
-            var inbox = inboxService.GetInbox();
-            var acceptInbox = inboxService.AcceptInbox("validUid:0:0", "somelabel");
+            var links = linkService.GetLinks();
+            var autolink = linkService.AutoLink();
 
             Console.ReadLine();
         }
