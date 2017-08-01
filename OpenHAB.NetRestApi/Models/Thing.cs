@@ -5,9 +5,6 @@ namespace OpenHAB.NetRestApi.Models
 {
     public class Thing
     {
-        [JsonProperty("statusInfo")]
-        public StatusInfo StatusInfo { get; set; }
-
         [JsonProperty("label")]
         public string Label { get; set; }
 
@@ -31,5 +28,14 @@ namespace OpenHAB.NetRestApi.Models
 
         [JsonProperty("location")]
         public string Location { get; set; }
+
+        [JsonProperty("statusInfo")]
+        public StatusInfo StatusInfo { get; set; }
+
+        [JsonProperty("firmwareStatus")]
+        public Firmware FirmwareStatus { get; set; }
+
+        [JsonProperty("editable ")]
+        public bool Editable { get; set; }
     }
 }

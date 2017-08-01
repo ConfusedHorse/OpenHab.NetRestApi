@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using OpenHAB.NetRestApi.RestApi;
 
 namespace OpenHAB.NetRestApi.Client
@@ -15,11 +16,14 @@ namespace OpenHAB.NetRestApi.Client
         static void Main(string[] args)
         {
             var openHab = OpenHab.CreateRestClient(Url, StartEventService);
-            var linkService = openHab.LinkService;
+            var thingTypeService = openHab.ThingTypeService;
 
-            var links = linkService.GetLinks();
-            var autolink = linkService.AutoLink();
+            var things = openHab.ThingService.GetThings();
 
+            var thingTypes = thingTypeService.GetThingTypes();
+            var firstUid = thingTypes.FirstOrDefault(tt => tt.Uid.Contains("hue") && !tt.Uid.Contains("bridge"))?.Uid;
+            var thingType = thingTypeService.GetThingType(firstUid);
+            
             Console.ReadLine();
         }
     }

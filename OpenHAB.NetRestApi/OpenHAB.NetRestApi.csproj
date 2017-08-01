@@ -52,6 +52,8 @@
     <Compile Include="Models\Action.cs" />
     <Compile Include="Models\Binding.cs" />
     <Compile Include="Models\Channel.cs" />
+    <Compile Include="Models\ChannelGroup.cs" />
+    <Compile Include="Models\Firmware.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Models\ChannelType.cs" />
     <Compile Include="Models\Condition.cs" />

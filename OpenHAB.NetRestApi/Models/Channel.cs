@@ -5,9 +5,6 @@ namespace OpenHAB.NetRestApi.Models
 {
     public class Channel
     {
-        //[JsonProperty("linkedItems")]
-        //public List<object> LinkedItems { get; set; }
-
         [JsonProperty("uid")]
         public string Uid { get; set; }
 
@@ -15,7 +12,10 @@ namespace OpenHAB.NetRestApi.Models
         public string Id { get; set; }
 
         [JsonProperty("channelTypeUID")]
-        public string TypeUid { get; set; }
+        public string ChannelTypeUid { get; set; }
+
+        [JsonProperty("typeUID ")]
+        public string TypeUid => ChannelTypeUid;
 
         [JsonProperty("itemType")]
         public string ItemType { get; set; }
@@ -32,8 +32,20 @@ namespace OpenHAB.NetRestApi.Models
         [JsonProperty("defaultTags")]
         public List<string> DefaultTags { get; set; }
 
+        [JsonProperty("tags")]
+        public List<string> Tags => DefaultTags;
+
         [JsonProperty("properties")]
         public object Properties { get; set; }
+
+        [JsonProperty("category")]
+        public string Category { get; set; }
+
+        [JsonProperty("stateDescription")]
+        public StateDescription StateDescription { get; set; }
+
+        [JsonProperty("advanced")]
+        public bool Advanced { get; set; }
 
         [JsonProperty("configuration")]
         public object ThingConfiguration { get; set; }

@@ -22,5 +22,20 @@ namespace OpenHAB.NetRestApi.Models
 
         [JsonProperty("bridge")]
         public bool Bridge { get; set; }
+
+        [JsonProperty("channels")]
+        public List<Channel> Channels { get; set; }
+
+        [JsonProperty("channelGroups")]
+        public List<ChannelGroup> ChannelGroups { get; set; }
+
+        [JsonProperty("configParameters")]
+        public List<Parameter> ConfigParameters { get; set; }
+
+        [JsonProperty("parameterGroups")]
+        public List<ParameterGroup> ParameterGroups { get; set; }
+
+        [JsonProperty("properties")]
+        public object Properties { get; set; }
     }
 }
