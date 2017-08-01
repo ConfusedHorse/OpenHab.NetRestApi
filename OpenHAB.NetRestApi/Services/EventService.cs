@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -49,11 +50,19 @@ namespace OpenHAB.NetRestApi.Services
                             var type = typeTemplate.Match(formattedJson).Groups[1].Value;
 
                             var eventObject = CreateEventObject(formattedJson, type, timeOccured);
-                            OpenHabBusEventOccured?.Invoke(OpenHab.RestClient, eventObject);
+                            RaiseEvent(eventObject);
                         }
                     }
                 }
             });
+        }
+
+        private void RaiseEvent(Event eventObject)
+        {
+#if DEBUG
+            Debug.WriteLine($"{eventObject.Occured}\t\t{eventObject.Target}\t\t{eventObject.Type}");
+#endif
+            OpenHabBusEventOccured?.Invoke(OpenHab.RestClient, eventObject);
         }
 
         private static Event CreateEventObject(string fixedData, string type, DateTime timeOccured)

@@ -4,9 +4,11 @@
     {
         #region Rest Client
 
-        public static OpenHabRestClient CreateRestClient(string url)
+        public static OpenHabRestClient CreateRestClient(string url, bool startEventService = false)
         {
-            return RestClient = new OpenHabRestClient(url);
+            var restClient = new OpenHabRestClient(url);
+            restClient.EventService.InitializeAsync();
+            return RestClient = restClient;
         }
 
         internal static OpenHabRestClient RestClient { get; private set; }

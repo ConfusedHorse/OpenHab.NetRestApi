@@ -11,10 +11,11 @@ namespace OpenHAB.NetRestApi.Client
     {
         //private const string Url = "http://localhost:8080/rest";
         private const string Url = "http://192.168.2.111:8080/rest";
+        private const bool StartEventService = true;
 
         static void Main(string[] args)
         {
-            var openHab = OpenHab.CreateRestClient(Url);
+            var openHab = OpenHab.CreateRestClient(Url, StartEventService);
             var voiceService = openHab.VoiceService;
 
             var voiceInterpreters = voiceService.GetInterpreters();

@@ -94,8 +94,7 @@ namespace OpenHAB.NetRestApi.RestApi
                 RestRequest request = GetRequest(method, resource, requestHeaders);
                 requestHeaders?.Each<RequestHeader>(rh => request.AddHeader(rh.Name, rh.Value));
                 if (requestBody != null) { request.AddBody(requestBody); }
-
-                Debug.WriteLine(RestClient.Execute(request).Content);
+                
                 return RestClient.Execute(request);
             }, token);
         }
@@ -121,7 +120,6 @@ namespace OpenHAB.NetRestApi.RestApi
             return Task.Run(() =>
             {
                 var task = ExecuteRequestAsync(method, resource, requestBody, requestHeaders, token);
-                var test = task.Result;
                 return JsonConvert.DeserializeObject<T>(task.Result.Content);
             }, token);
         }
