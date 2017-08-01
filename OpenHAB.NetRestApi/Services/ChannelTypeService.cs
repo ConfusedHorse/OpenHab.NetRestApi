@@ -19,6 +19,7 @@ namespace OpenHAB.NetRestApi.Services
             const string resource = "/channel-types";
             return OpenHab.RestClient.ExecuteRequestAsync<List<ChannelType>>(Method.GET, resource, token: token);
         }
+
         public ChannelType GetChannelType(string channelTypeId)
         {
             return GetChannelTypeAsync(channelTypeId).Result;

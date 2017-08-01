@@ -19,6 +19,7 @@ namespace OpenHAB.NetRestApi.Services
             const string resource = "/config-descriptions";
             return OpenHab.RestClient.ExecuteRequestAsync<List<ConfigDescriptor>>(Method.GET, resource, token: token);
         }
+
         public ConfigDescriptor GetConfigDescriptor(string configDescriptorUri)
         {
             return GetConfigDescriptorAsync(configDescriptorUri).Result;

@@ -16,8 +16,8 @@ namespace OpenHAB.NetRestApi.Client
         {
             var openHab = OpenHab.CreateRestClient(Url);
 
-            var configDescriptors = openHab.ConfigDescriptionService.GetConfigDescriptors();
-            var configDescriptor = openHab.ConfigDescriptionService.GetConfigDescriptor(configDescriptors.FirstOrDefault()?.Uri);
+            var discoveryBindings = openHab.DiscoveryService.GetBindings();
+            var timeout = openHab.DiscoveryService.GetTimeout(discoveryBindings.FirstOrDefault());
 
             Console.ReadLine();
         }
