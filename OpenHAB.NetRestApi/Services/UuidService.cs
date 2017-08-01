@@ -6,6 +6,10 @@ namespace OpenHAB.NetRestApi.Services
 {
     public class UuidService
     {
+        /// <summary>
+        /// A unified unique id.
+        /// </summary>
+        /// <returns></returns>
         public string GetUuid()
         {
             const string resource = "/uuid";

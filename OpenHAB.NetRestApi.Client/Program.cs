@@ -16,8 +16,8 @@ namespace OpenHAB.NetRestApi.Client
         {
             var openHab = OpenHab.CreateRestClient(Url);
 
-            var discoveryBindings = openHab.DiscoveryService.GetBindings();
-            var timeout = openHab.DiscoveryService.GetTimeout(discoveryBindings.FirstOrDefault());
+            var thing = openHab.ThingService.GetThings().FirstOrDefault();
+            var status = openHab.ThingService.GetThingStatus(thing.Uid);
 
             Console.ReadLine();
         }
