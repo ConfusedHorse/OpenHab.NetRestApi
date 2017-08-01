@@ -2,7 +2,7 @@
 
 namespace OpenHAB.NetRestApi.Models
 {
-    public class ChannelLink
+    public class Link
     {
         [JsonProperty("itemName")]
         public string ItemName { get; set; }

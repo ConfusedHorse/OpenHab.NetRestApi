@@ -7,7 +7,7 @@ namespace OpenHAB.NetRestApi.Models.Events
     public class ItemChannelLinkRemovedEvent : OpenHabEvent
     {
         [JsonProperty("payload")]
-        public ChannelLink Payload { get; set; }
+        public Link Payload { get; set; }
 
         #region Payload Parameters
 
