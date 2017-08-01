@@ -2,7 +2,7 @@
 
 namespace OpenHAB.NetRestApi.Models
 {
-    public class Option
+    public class StateOption
     {
         [JsonProperty("label")]
         public string Label { get; set; }

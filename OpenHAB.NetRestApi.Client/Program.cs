@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
-using OpenHAB.NetRestApi.Models;
-using OpenHAB.NetRestApi.Models.Events;
 using OpenHAB.NetRestApi.RestApi;
-using RestSharp;
 
 namespace OpenHAB.NetRestApi.Client
 {
@@ -27,11 +20,6 @@ namespace OpenHAB.NetRestApi.Client
             var channelType = openHab.ChannelTypeService.GetChannelType(channelTypes.FirstOrDefault()?.Uid);
 
             Console.ReadLine();
-        }
-
-        private static void EventServiceOnOpenHabBusEventOccured(object sender, Event eventObject)
-        {
-            Debug.WriteLine($"{eventObject.Occured}\t{eventObject.Target}\t{eventObject.Type}");
         }
     }
 }

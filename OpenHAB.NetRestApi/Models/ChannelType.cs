@@ -6,10 +6,10 @@ namespace OpenHAB.NetRestApi.Models
     public class ChannelType
     {
         [JsonProperty("parameters")]
-        public List<object> Parameters { get; set; }
+        public List<Parameter> Parameters { get; set; }
 
         [JsonProperty("parameterGroups")]
-        public List<object> ParameterGroups { get; set; }
+        public List<ParameterGroup> ParameterGroups { get; set; }
 
         [JsonProperty("description")]
         public string Description { get; set; }
