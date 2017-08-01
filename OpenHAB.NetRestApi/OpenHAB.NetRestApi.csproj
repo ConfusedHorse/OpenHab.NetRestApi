@@ -51,6 +51,9 @@
     <Compile Include="Helpers\NewtonsoftJsonSerializer.cs" />
     <Compile Include="Models\Binding.cs" />
     <Compile Include="Models\Channel.cs" />
+    <Compile Include="Models\ChannelType.cs" />
+    <Compile Include="Models\Option.cs" />
+    <Compile Include="Models\StateDescription.cs" />
     <Compile Include="Models\Events\Event.cs" />
     <Compile Include="Models\Events\ItemCommandEvent.cs" />
     <Compile Include="Models\Events\Payloads\ItemCommandPayload.cs" />

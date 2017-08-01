@@ -44,12 +44,7 @@ namespace OpenHAB.NetRestApi.Services
                             var timeOccured = DateTime.Now;
 
                             //adjust json format
-
-                            var formattedJson = JsonHelper.FormatJson(data.Value);
-
-                            //var capturedData = data.Value.Replace(@"\", string.Empty); //removed delimiter bevore quotes
-                            //var fixedData = capturedData.Replace(@"""{", @"{").Replace(@"}""", @"}"); //removed quotes around brackets
-                            //var cleanedData = fixedData.Replace(@"""""", @""""); //removed double quotes
+                            var formattedJson = JsonHelper.Format(data.Value);
 
                             var type = typeTemplate.Match(formattedJson).Groups[1].Value;
 

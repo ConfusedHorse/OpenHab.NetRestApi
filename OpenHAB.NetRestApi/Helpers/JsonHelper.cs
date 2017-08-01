@@ -9,7 +9,7 @@ namespace OpenHAB.NetRestApi.Helpers
     {
         private const string IndentString = "    ";
 
-        public static string FormatJson(string str)
+        public static string Format(string str)
         {
             var indent = 0;
             var quoted = false;

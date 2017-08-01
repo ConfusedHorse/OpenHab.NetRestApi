@@ -23,29 +23,8 @@ namespace OpenHAB.NetRestApi.Client
         {
             var openHab = OpenHab.CreateRestClient(Url);
 
-            var eventService = openHab.EventService;
-            eventService.OpenHabBusEventOccured += EventServiceOnOpenHabBusEventOccured;
-            eventService.InitializeAsync();
-
-            //var thingToChange = new Thing
-            //{
-            //    Uid = "yahooweather:weather",
-            //    ThingTypeUid = "yahooweather:weather",
-            //    Label = "YahooWeather",
-            //    Location = "Berlin",
-            //    Configuration = new { refresh = 60, location = 638242 },
-            //    StatusInfo = new StatusInfo { Status = "ONLINE", StatusDetail = "NONE" }
-            //};
-
-            //var resp = openHab.ThingService.CreateThing(thingToChange);
-
-            //var things = openHab.ThingService.GetThings();
-            //var hueThing = things.FirstOrDefault(t => t.Label.Contains("hue"));
-            //var channels = hueThing?.Channels;
-            //var firstChannel = channels?.FirstOrDefault();
-
-            //var deleteThing = openHab.ThingService.DeleteChannelLink(hueThing, firstChannel);
-            //var createThing = openHab.ThingService.CreateChannelLink(hueThing, firstChannel);
+            var channelTypes = openHab.ChannelTypeService.GetChannelTypes();
+            var channelType = openHab.ChannelTypeService.GetChannelType(channelTypes.FirstOrDefault()?.Uid);
 
             Console.ReadLine();
         }
