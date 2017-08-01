@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OpenHAB.NetRestApi.Helpers;
@@ -90,16 +91,28 @@ namespace OpenHAB.NetRestApi.RestApi
         {
             return Task.Run(() =>
             {
-                var request = new RestRequest(resource, method)
-                {
-                    RequestFormat = DataFormat.Json,
-                    JsonSerializer = new NewtonsoftJsonSerializer()
-                };
+                RestRequest request = GetRequest(method, resource, requestHeaders);
                 requestHeaders?.Each<RequestHeader>(rh => request.AddHeader(rh.Name, rh.Value));
-                if (requestBody != null) {request.AddBody(requestBody);}
+                if (requestBody != null) { request.AddBody(requestBody); }
 
+                Debug.WriteLine(RestClient.Execute(request).Content);
                 return RestClient.Execute(request);
             }, token);
+        }
+
+        private static RestRequest GetRequest(Method method, string resource, RequestHeaderCollection requestHeaders)
+        {
+            if (requestHeaders != null && requestHeaders.Contains(RequestHeader.ContentPlainText))
+            return new RestRequest(resource, method)
+            {
+                RequestFormat = DataFormat.Json,
+                JsonSerializer = new NewtonsoftJsonSerializer(RequestHeader.ContentPlainText.Value)
+            };
+            return new RestRequest(resource, method)
+            {
+                RequestFormat = DataFormat.Json,
+                JsonSerializer = new NewtonsoftJsonSerializer()
+            };
         }
 
         public Task<T> ExecuteRequestAsync<T>(Method method, string resource, object requestBody = null, 
@@ -108,6 +121,7 @@ namespace OpenHAB.NetRestApi.RestApi
             return Task.Run(() =>
             {
                 var task = ExecuteRequestAsync(method, resource, requestBody, requestHeaders, token);
+                var test = task.Result;
                 return JsonConvert.DeserializeObject<T>(task.Result.Content);
             }, token);
         }
@@ -119,6 +133,7 @@ namespace OpenHAB.NetRestApi.RestApi
             _configDescriptionService = null;
             _defaultService = null;
             _discoveryService = null;
+            _eventService = null;
             _extensionService = null;
             _inboxService = null;
             _itemService = null;

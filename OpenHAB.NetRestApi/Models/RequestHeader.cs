@@ -12,8 +12,8 @@ namespace OpenHAB.NetRestApi.Models
 
         #region Properties
 
-        public string Name { get; set; }
-        public string Value { get; set; }
+        public string Name { get; }
+        public string Value { get; }
 
         #endregion
 
@@ -33,6 +33,23 @@ namespace OpenHAB.NetRestApi.Models
         public static implicit operator RequestHeaderCollection (RequestHeader self)
         {
             return new RequestHeaderCollection {self};
+        }
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as RequestHeader);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (Value != null ? Value.GetHashCode() : 0);
+            }
+        }
+
+        protected bool Equals(RequestHeader other)
+        {
+            return string.Equals(Name, other.Name) && string.Equals(Value, other.Value);
         }
 
         #endregion

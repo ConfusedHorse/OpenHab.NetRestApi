@@ -35,9 +35,9 @@ namespace OpenHAB.NetRestApi.Helpers
         /// <summary>
         /// Default serializer
         /// </summary>
-        public NewtonsoftJsonSerializer()
+        public NewtonsoftJsonSerializer(string contentType = "application/json")
         {
-            ContentType = "application/json";
+            ContentType = contentType;
             _serializer = new JsonSerializer
             {
                 MissingMemberHandling = MissingMemberHandling.Ignore,

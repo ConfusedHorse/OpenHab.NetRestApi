@@ -15,9 +15,12 @@ namespace OpenHAB.NetRestApi.Client
         static void Main(string[] args)
         {
             var openHab = OpenHab.CreateRestClient(Url);
+            var voiceService = openHab.VoiceService;
 
-            var thing = openHab.ThingService.GetThings().FirstOrDefault();
-            var status = openHab.ThingService.GetThingStatus(thing.Uid);
+            var voiceInterpreters = voiceService.GetInterpreters();
+            var voiceInterpreter = voiceService.GetInterpreter(voiceInterpreters.FirstOrDefault(vi => vi.Id == "system")?.Id);
+
+            var sendMessageResult = voiceService.SendMessage(voiceInterpreter.Id, "Das ist ein Test.", "de");
 
             Console.ReadLine();
         }
