@@ -46,9 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\Command.cs" />
     <Compile Include="Helpers\EnumerableExtension.cs" />
     <Compile Include="Helpers\Json.cs" />
     <Compile Include="Helpers\NewtonsoftJsonSerializer.cs" />
+    <Compile Include="Helpers\Resource.cs" />
     <Compile Include="Models\Action.cs" />
     <Compile Include="Models\Binding.cs" />
     <Compile Include="Models\Channel.cs" />
