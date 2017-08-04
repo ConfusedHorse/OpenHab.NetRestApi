@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Command.cs" />
+    <Compile Include="Constants\RuleMemberType.cs" />
     <Compile Include="Helpers\EnumerableExtension.cs" />
     <Compile Include="Helpers\Json.cs" />
     <Compile Include="Helpers\NewtonsoftJsonSerializer.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Models\Inbox.cs" />
     <Compile Include="Models\Interpreter.cs" />
     <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\ModuleType.cs" />
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\ParameterGroup.cs" />
     <Compile Include="Models\Option.cs" />

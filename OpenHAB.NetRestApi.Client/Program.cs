@@ -1,4 +1,5 @@
 ﻿using System;
+using OpenHAB.NetRestApi.Constants;
 using OpenHAB.NetRestApi.RestApi;
 
 namespace OpenHAB.NetRestApi.Client
@@ -15,9 +16,11 @@ namespace OpenHAB.NetRestApi.Client
         static void Main(string[] args)
         {
             var openHab = OpenHab.CreateRestClient(Url, StartEventService);
-            var templateService = openHab.TemplateService;
+            var moduleTypeService = openHab.ModuleTypeService;
 
-            var templates = templateService.GetTemplates();
+            var moduleTypeActions = moduleTypeService.GetModuleTypes(RuleMemberType.action);
+            var moduleTypeConditionss = moduleTypeService.GetModuleTypes(RuleMemberType.condition);
+            var moduleTypeTriggers = moduleTypeService.GetModuleTypes(RuleMemberType.trigger);
 
             Console.ReadLine();
         }
