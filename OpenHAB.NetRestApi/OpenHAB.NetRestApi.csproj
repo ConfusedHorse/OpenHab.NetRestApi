@@ -97,6 +97,7 @@
     <Compile Include="Models\Events\UnknownEvent.cs" />
     <Compile Include="Models\RequestHeader.cs" />
     <Compile Include="Models\StatusInfo.cs" />
+    <Compile Include="Models\Template.cs" />
     <Compile Include="Models\Thing.cs" />
     <Compile Include="Models\ThingType.cs" />
     <Compile Include="Models\Trigger.cs" />

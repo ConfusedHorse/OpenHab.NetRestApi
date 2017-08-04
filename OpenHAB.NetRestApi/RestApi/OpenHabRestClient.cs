@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OpenHAB.NetRestApi.Helpers;
@@ -9,7 +8,7 @@ using RestSharp;
 
 namespace OpenHAB.NetRestApi.RestApi
 {
-    public class OpenHabRestClient
+    public sealed class OpenHabRestClient
     {
         #region Fields
 
