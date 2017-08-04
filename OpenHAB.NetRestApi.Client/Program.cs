@@ -19,7 +19,7 @@ namespace OpenHAB.NetRestApi.Client
             var moduleTypeService = openHab.ModuleTypeService;
 
             var moduleTypeActions = moduleTypeService.GetModuleTypes(RuleMemberType.action);
-            var moduleTypeConditionss = moduleTypeService.GetModuleTypes(RuleMemberType.condition);
+            var moduleTypeConditions = moduleTypeService.GetModuleTypes(RuleMemberType.condition);
             var moduleTypeTriggers = moduleTypeService.GetModuleTypes(RuleMemberType.trigger);
 
             Console.ReadLine();
