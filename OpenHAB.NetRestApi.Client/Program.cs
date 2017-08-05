@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using OpenHAB.NetRestApi.RestApi;
 
 namespace OpenHAB.NetRestApi.Client
@@ -16,17 +15,11 @@ namespace OpenHAB.NetRestApi.Client
         static void Main(string[] args)
         {
             var openHab = OpenHab.CreateRestClient(Url, StartEventService);
-            var serviceService = openHab.ServiceService;
+            var moduleTypeService = openHab.ModuleTypeService;
 
-            var services = serviceService.GetServices();
-            var anyService = services.FirstOrDefault(s => s.Id == "org.eclipse.smarthome.audio");
-
-            var configuration = serviceService.GetServiceConfiguration(anyService?.Id);
-            var configDescription = openHab.ConfigDescriptionService.GetConfigDescription(anyService?.ConfigDescriptionUri);
-
-            var deleted = serviceService.DeleteServiceConfiguration(anyService?.Id);
-            var readded = serviceService.UpdateServiceConfiguration(anyService?.Id, configuration);
-            var success = configuration == readded;
+            var triggers = moduleTypeService.GetTriggers();
+            var conditions = moduleTypeService.GetConditions();
+            var actions = moduleTypeService.GetActions();
 
             Console.ReadLine();
         }

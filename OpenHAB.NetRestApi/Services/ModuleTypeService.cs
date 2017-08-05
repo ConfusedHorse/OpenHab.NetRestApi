@@ -71,6 +71,33 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
+        /// Get all available module types of type "trigger"
+        /// </summary>
+        /// <returns></returns>
+        public List<ModuleType> GetTriggers()
+        {
+            return GetModuleTypesAsync(RuleMemberType.trigger).Result;
+        }
+
+        /// <summary>
+        /// Get all available module types of type "condition"
+        /// </summary>
+        /// <returns></returns>
+        public List<ModuleType> GetConditions()
+        {
+            return GetModuleTypesAsync(RuleMemberType.condition).Result;
+        }
+
+        /// <summary>
+        /// Get all available module types of type "action"
+        /// </summary>
+        /// <returns></returns>
+        public List<ModuleType> GetActions()
+        {
+            return GetModuleTypesAsync(RuleMemberType.action).Result;
+        }
+
+        /// <summary>
         /// Get all available module types.
         /// </summary>
         /// <param name="type"></param>
