@@ -90,10 +90,11 @@ namespace OpenHAB.NetRestApi.RestApi
         {
             return Task.Run(() =>
             {
-                RestRequest request = GetRequest(method, resource, requestHeaders);
+                var request = GetRequest(method, resource, requestHeaders);
                 requestHeaders?.Each<RequestHeader>(rh => request.AddHeader(rh.Name, rh.Value));
                 if (requestBody != null) { request.AddBody(requestBody); }
-                
+
+                var test = RestClient.Execute(request);
                 return RestClient.Execute(request);
             }, token);
         }

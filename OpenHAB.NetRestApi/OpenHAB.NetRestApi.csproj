@@ -56,12 +56,12 @@
     <Compile Include="Models\Binding.cs" />
     <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\ChannelGroup.cs" />
+    <Compile Include="Models\ServiceConfiguration.cs" />
     <Compile Include="Models\Firmware.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Models\ChannelType.cs" />
     <Compile Include="Models\Condition.cs" />
     <Compile Include="Models\ConfigDescription.cs" />
-    <Compile Include="Models\ConfigDescriptor.cs" />
     <Compile Include="Models\Events\ItemRemovedEvent.cs" />
     <Compile Include="Models\Events\ItemChannelLinkAddedEvent.cs" />
     <Compile Include="Models\Events\ItemChannelLinkRemovedEvent.cs" />
@@ -90,6 +90,7 @@
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Models\Rule.cs" />
+    <Compile Include="Models\Service.cs" />
     <Compile Include="Models\StateDescription.cs" />
     <Compile Include="Models\Events\OpenHabEvent.cs" />
     <Compile Include="Models\Events\ItemCommandEvent.cs" />
