@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using OpenHAB.NetRestApi.RestApi;
 
@@ -16,16 +17,31 @@ namespace OpenHAB.NetRestApi.Client
         static void Main(string[] args)
         {
             var openHab = OpenHab.CreateRestClient(Url, StartEventService);
-            var sitemapService = openHab.SitemapService;
+            var ruleService = openHab.RuleService;
 
-            var sitemaps = sitemapService.GetSitemaps();
-            var defaultSitemap = sitemapService.GetDefaultSitemap();
+            var rules = ruleService.GetRules();
+            var someRule = rules.FirstOrDefault();
 
-            var someWidget = defaultSitemap.Homepage.Widgets.FirstOrDefault()?.Widgets.FirstOrDefault();
-            var pageId = someWidget?.LinkedPage?.PageId;
-            var page = sitemapService.GetPage(defaultSitemap.Name, pageId);
+            var configuration = ruleService.GetRuleConfiguration(someRule?.Uid);
+            var ownConfiguration = someRule?.Configuration;
 
-            var subscriptionId = sitemapService.Subscribe().SubscriptionId;
+            var actions = ruleService.GetRuleActions(someRule?.Uid);
+            var ownActions = someRule?.Actions;
+
+            var ruleToBeDeleted = someRule;
+            Debug.Assert(ruleToBeDeleted != null, "createRule != null");
+            ruleToBeDeleted.Uid = "ruleToBeDeleted";
+            Debug.WriteLine($"Count before adding new rule: {rules.Count}");
+
+            Debug.WriteLine("Creating new rule...");
+            ruleService.CreateRule(ruleToBeDeleted);
+            rules = ruleService.GetRules();
+            Debug.WriteLine($"Count after adding new rule: {rules.Count}");
+
+            Debug.WriteLine("Deleting new rule...");
+            ruleService.DeleteRule(ruleToBeDeleted);
+            rules = ruleService.GetRules();
+            Debug.WriteLine($"Count after adding new rule: {rules.Count}");
 
             Console.ReadLine();
         }

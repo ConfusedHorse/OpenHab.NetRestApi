@@ -6,4 +6,10 @@
         condition,
         trigger
     }
+    public enum RuleModuleCategory
+    {
+        actions,
+        conditions,
+        triggers
+    }
 }
