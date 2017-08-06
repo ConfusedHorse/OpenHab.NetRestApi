@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Constants\Command.cs" />
     <Compile Include="Constants\RuleMemberType.cs" />
+    <Compile Include="Constants\WidgetType.cs" />
     <Compile Include="Helpers\EnumerableExtension.cs" />
     <Compile Include="Helpers\Json.cs" />
     <Compile Include="Helpers\NewtonsoftJsonSerializer.cs" />
@@ -56,6 +57,14 @@
     <Compile Include="Models\Binding.cs" />
     <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\ChannelGroup.cs" />
+    <Compile Include="Models\CommittingOutputStream.cs" />
+    <Compile Include="Models\Context.cs" />
+    <Compile Include="Models\EntityStream.cs" />
+    <Compile Include="Models\Header.cs" />
+    <Compile Include="Models\Homepage.cs" />
+    <Compile Include="Models\LinkedPage.cs" />
+    <Compile Include="Models\Page.cs" />
+    <Compile Include="Models\Parent.cs" />
     <Compile Include="Models\ServiceConfiguration.cs" />
     <Compile Include="Models\Firmware.cs" />
     <Compile Include="Models\Link.cs" />
@@ -91,6 +100,7 @@
     <Compile Include="Models\Property.cs" />
     <Compile Include="Models\Rule.cs" />
     <Compile Include="Models\Service.cs" />
+    <Compile Include="Models\Sitemap.cs" />
     <Compile Include="Models\StateDescription.cs" />
     <Compile Include="Models\Events\OpenHabEvent.cs" />
     <Compile Include="Models\Events\ItemCommandEvent.cs" />
@@ -100,10 +110,12 @@
     <Compile Include="Models\Events\UnknownEvent.cs" />
     <Compile Include="Models\RequestHeader.cs" />
     <Compile Include="Models\StatusInfo.cs" />
+    <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\Template.cs" />
     <Compile Include="Models\Thing.cs" />
     <Compile Include="Models\ThingType.cs" />
     <Compile Include="Models\Trigger.cs" />
+    <Compile Include="Models\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestApi\OpenHab.cs" />
     <Compile Include="RestApi\OpenHabRestClient.cs" />

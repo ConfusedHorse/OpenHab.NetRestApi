@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using OpenHAB.NetRestApi.RestApi;
 
 namespace OpenHAB.NetRestApi.Client
@@ -15,11 +16,16 @@ namespace OpenHAB.NetRestApi.Client
         static void Main(string[] args)
         {
             var openHab = OpenHab.CreateRestClient(Url, StartEventService);
-            var moduleTypeService = openHab.ModuleTypeService;
+            var sitemapService = openHab.SitemapService;
 
-            var triggers = moduleTypeService.GetTriggers();
-            var conditions = moduleTypeService.GetConditions();
-            var actions = moduleTypeService.GetActions();
+            var sitemaps = sitemapService.GetSitemaps();
+            var defaultSitemap = sitemapService.GetDefaultSitemap();
+
+            var someWidget = defaultSitemap.Homepage.Widgets.FirstOrDefault()?.Widgets.FirstOrDefault();
+            var pageId = someWidget?.LinkedPage?.PageId;
+            var page = sitemapService.GetPage(defaultSitemap.Name, pageId);
+
+            var subscriptionId = sitemapService.Subscribe().SubscriptionId;
 
             Console.ReadLine();
         }
