@@ -237,9 +237,9 @@ namespace OpenHAB.NetRestApi.Services
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public string CreateItem(Item item)
+        public Thing CreateItem(Item item)
         {
-            return CreateItemAsync(item).Result.Content;
+            return CreateItemAsync(item).Result;
         }
 
         /// <summary>
@@ -248,10 +248,10 @@ namespace OpenHAB.NetRestApi.Services
         /// <param name="item"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> CreateItemAsync(Item item, CancellationToken token = default(CancellationToken))
+        public Task<Thing> CreateItemAsync(Item item, CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{item.Name}";
-            return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, item, token: token);
+            return OpenHab.RestClient.ExecuteRequestAsync<Thing>(Method.PUT, resource, item, token: token);
         }
 
         /// <summary>
@@ -259,9 +259,9 @@ namespace OpenHAB.NetRestApi.Services
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public string UpdateItem(Item item)
+        public Thing UpdateItem(Item item)
         {
-            return UpdateItemAsync(item).Result.Content;
+            return UpdateItemAsync(item).Result;
         }
 
         /// <summary>
@@ -270,10 +270,10 @@ namespace OpenHAB.NetRestApi.Services
         /// <param name="item"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> UpdateItemAsync(Item item, CancellationToken token = default(CancellationToken))
+        public Task<Thing> UpdateItemAsync(Item item, CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{item.Name}";
-            return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, item, token: token);
+            return OpenHab.RestClient.ExecuteRequestAsync<Thing>(Method.PUT, resource, item, token: token);
         }
 
         /// <summary>
