@@ -6,7 +6,9 @@
 
         public static OpenHabRestClient CreateRestClient(string url, bool startEventService = false)
         {
-            var restClient = new OpenHabRestClient(url);
+            var restUrl = $"http://{url}:8080/rest";
+
+            var restClient = new OpenHabRestClient(restUrl);
             if (startEventService) restClient.EventService.InitializeAsync();
             return RestClient = restClient;
         }

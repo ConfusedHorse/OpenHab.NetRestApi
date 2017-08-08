@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OpenHAB.NetRestApi.Helpers;
@@ -42,6 +44,13 @@ namespace OpenHAB.NetRestApi.RestApi
         {
             Url = url;
             RestClient = new RestClient(url);
+            if (!TestConnection())
+                throw new ArgumentException($"Unable to establish connection with given url: ({url})");
+        }
+
+        public bool TestConnection()
+        {
+            return ExecuteRequestAsync(Method.GET, string.Empty).Result.StatusCode == HttpStatusCode.OK;
         }
 
         #region Properties

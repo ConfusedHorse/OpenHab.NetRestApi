@@ -8,14 +8,15 @@ namespace OpenHAB.NetRestApi.Client
     /// </summary>
     class Program
     {
-        //private const string Url = "http://localhost:8080/rest";
-        private const string Url = "http://192.168.2.111:8080/rest";
-        private const bool StartEventService = true;
+        //private const string Url = "localhost";
+        private const string Url = "192.168.2.111";
+        private const bool StartEventService = false;
 
         static void Main(string[] args)
         {
             var openHab = OpenHab.CreateRestClient(Url, StartEventService);
-            
+            var success = openHab.TestConnection();
+
             //tests go here
 
             Console.ReadLine();
