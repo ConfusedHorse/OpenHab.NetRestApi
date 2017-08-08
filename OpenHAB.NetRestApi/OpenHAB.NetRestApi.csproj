@@ -57,9 +57,8 @@
     <Compile Include="Models\Binding.cs" />
     <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\ChannelGroup.cs" />
-    <Compile Include="Models\CommittingOutputStream.cs" />
+    <Compile Include="Models\Stream.cs" />
     <Compile Include="Models\Context.cs" />
-    <Compile Include="Models\EntityStream.cs" />
     <Compile Include="Models\Header.cs" />
     <Compile Include="Models\Homepage.cs" />
     <Compile Include="Models\LinkedPage.cs" />
