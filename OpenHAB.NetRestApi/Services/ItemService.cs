@@ -237,7 +237,7 @@ namespace OpenHAB.NetRestApi.Services
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public Thing CreateItem(Item item)
+        public Item CreateItem(Item item)
         {
             return CreateItemAsync(item).Result;
         }
@@ -248,10 +248,10 @@ namespace OpenHAB.NetRestApi.Services
         /// <param name="item"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<Thing> CreateItemAsync(Item item, CancellationToken token = default(CancellationToken))
+        public Task<Item> CreateItemAsync(Item item, CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{item.Name}";
-            return OpenHab.RestClient.ExecuteRequestAsync<Thing>(Method.PUT, resource, item, token: token);
+            return OpenHab.RestClient.ExecuteRequestAsync<Item>(Method.PUT, resource, item, token: token);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace OpenHAB.NetRestApi.Services
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public Thing UpdateItem(Item item)
+        public Item UpdateItem(Item item)
         {
             return UpdateItemAsync(item).Result;
         }
@@ -270,10 +270,10 @@ namespace OpenHAB.NetRestApi.Services
         /// <param name="item"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<Thing> UpdateItemAsync(Item item, CancellationToken token = default(CancellationToken))
+        public Task<Item> UpdateItemAsync(Item item, CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{item.Name}";
-            return OpenHab.RestClient.ExecuteRequestAsync<Thing>(Method.PUT, resource, item, token: token);
+            return OpenHab.RestClient.ExecuteRequestAsync<Item>(Method.PUT, resource, item, token: token);
         }
 
         /// <summary>
