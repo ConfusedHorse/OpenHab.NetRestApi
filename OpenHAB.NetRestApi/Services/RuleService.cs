@@ -467,7 +467,7 @@ namespace OpenHAB.NetRestApi.Services
         /// <param name="param"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public string SetRuleModuleCGetRuleModuleConfigurationParameteronfiguration(string uid, RuleModuleCategory moduleCategory, string id, string param, string value)
+        public string SetRuleModuleConfigurationParameter(string uid, RuleModuleCategory moduleCategory, string id, string param, string value)
         {
             return SetRuleModuleConfigurationParameterAsync(uid, moduleCategory.ToString(), id, param, value).Result.Content;
         }
