@@ -10,7 +10,7 @@ namespace OpenHAB.NetRestApi.Services
     public class InboxService
     {
         /// <summary>
-        /// Get all discovered things.
+        ///     Get all discovered things.
         /// </summary>
         /// <returns></returns>
         public List<Inbox> GetInbox()
@@ -19,7 +19,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all discovered things.
+        ///     Get all discovered things.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -30,7 +30,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes the discovery result from the inbox.
+        ///     Removes the discovery result from the inbox.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <returns></returns>
@@ -40,19 +40,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes the discovery result from the inbox.
+        ///     Removes the discovery result from the inbox.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> DeleteInboxAsync(string thingUid, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> DeleteInboxAsync(string thingUid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/inbox/{thingUid}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.DELETE, resource, token: token);
         }
 
         /// <summary>
-        /// Approves the discovery result by adding the thing to the registry.
+        ///     Approves the discovery result by adding the thing to the registry.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <param name="label"></param>
@@ -63,20 +64,22 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Approves the discovery result by adding the thing to the registry.
+        ///     Approves the discovery result by adding the thing to the registry.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <param name="label"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> AcceptInboxAsync(string thingUid, string label, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> AcceptInboxAsync(string thingUid, string label,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/inbox/{thingUid}/approve";
-            return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, label, RequestHeader.ContentPlainText, token);
+            return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, label, RequestHeader.ContentPlainText,
+                token);
         }
 
         /// <summary>
-        /// Flags a discovery result as ignored for further processing.
+        ///     Flags a discovery result as ignored for further processing.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <returns></returns>
@@ -86,19 +89,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Flags a discovery result as ignored for further processing.
+        ///     Flags a discovery result as ignored for further processing.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> IgnoreInboxAsync(string thingUid, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> IgnoreInboxAsync(string thingUid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/inbox/{thingUid}/ignore";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, token: token);
         }
 
         /// <summary>
-        /// Removes ignore flag from a discovery result.
+        ///     Removes ignore flag from a discovery result.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <returns></returns>
@@ -108,12 +112,13 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes ignore flag from a discovery result.
+        ///     Removes ignore flag from a discovery result.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> UnignoreInboxAsync(string thingUid, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> UnignoreInboxAsync(string thingUid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/inbox/{thingUid}/unignore";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, token: token);

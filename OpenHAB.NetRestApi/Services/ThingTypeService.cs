@@ -10,7 +10,7 @@ namespace OpenHAB.NetRestApi.Services
     public class ThingTypeService
     {
         /// <summary>
-        /// Gets all available thing types without config description, channels and properties.
+        ///     Gets all available thing types without config description, channels and properties.
         /// </summary>
         /// <returns></returns>
         public List<ThingType> GetThingTypes()
@@ -19,7 +19,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets all available thing types without config description, channels and properties.
+        ///     Gets all available thing types without config description, channels and properties.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -30,7 +30,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets thing type by UID.
+        ///     Gets thing type by UID.
         /// </summary>
         /// <param name="thingTypeUid"></param>
         /// <returns></returns>
@@ -40,19 +40,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets thing type by UID.
+        ///     Gets thing type by UID.
         /// </summary>
         /// <param name="thingTypeUid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<ThingType> GetThingTypeAsync(string thingTypeUid, CancellationToken token = default(CancellationToken))
+        public Task<ThingType> GetThingTypeAsync(string thingTypeUid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/thing-types/{thingTypeUid}";
             return OpenHab.RestClient.ExecuteRequestAsync<ThingType>(Method.GET, resource, token: token);
         }
 
         /// <summary>
-        /// Get all available firmwares for provided thingType.
+        ///     Get all available firmwares for provided thingType.
         /// </summary>
         /// <param name="thingTypeUid"></param>
         /// <returns></returns>
@@ -62,12 +63,13 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available firmwares for provided thingType.
+        ///     Get all available firmwares for provided thingType.
         /// </summary>
         /// <param name="thingTypeUid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<List<string>> GetFirmwaresAsync(string thingTypeUid, CancellationToken token = default(CancellationToken))
+        public Task<List<string>> GetFirmwaresAsync(string thingTypeUid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/thing-types/{thingTypeUid}/firmwares";
             return OpenHab.RestClient.ExecuteRequestAsync<List<string>>(Method.GET, resource, token: token);

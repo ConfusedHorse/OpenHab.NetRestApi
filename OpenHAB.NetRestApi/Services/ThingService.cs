@@ -10,7 +10,7 @@ namespace OpenHAB.NetRestApi.Services
     public class ThingService
     {
         /// <summary>
-        /// Get all available things.
+        ///     Get all available things.
         /// </summary>
         /// <returns></returns>
         public List<Thing> GetThings()
@@ -19,7 +19,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available things.
+        ///     Get all available things.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -30,7 +30,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets thing by UID.
+        ///     Gets thing by UID.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -40,7 +40,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets thing by UID.
+        ///     Gets thing by UID.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="token"></param>
@@ -52,7 +52,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets thing's config status.
+        ///     Gets thing's config status.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -62,19 +62,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets thing's config status.
+        ///     Gets thing's config status.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> GetThingConfigStatusAsync(string uid, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> GetThingConfigStatusAsync(string uid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/things/{uid}/config/status";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.GET, resource, token: token);
         }
 
         /// <summary>
-        /// Gets thing's firmware status.
+        ///     Gets thing's firmware status.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -84,19 +85,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets thing's firmware status.
+        ///     Gets thing's firmware status.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> GetThingFirmwareStatusAsync(string uid, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> GetThingFirmwareStatusAsync(string uid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/things/{uid}/firmware/status";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.GET, resource, token: token);
         }
 
         /// <summary>
-        /// Gets thing's status.
+        ///     Gets thing's status.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -106,7 +108,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets thing's status.
+        ///     Gets thing's status.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="token"></param>
@@ -118,7 +120,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Creates a new thing and adds it to the registry.
+        ///     Creates a new thing and adds it to the registry.
         /// </summary>
         /// <param name="thing"></param>
         /// <returns></returns>
@@ -128,7 +130,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Creates a new thing and adds it to the registry.
+        ///     Creates a new thing and adds it to the registry.
         /// </summary>
         /// <param name="thing"></param>
         /// <param name="token"></param>
@@ -151,7 +153,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Links item to a channel. Creates item if such does not exist yet.
+        ///     Links item to a channel. Creates item if such does not exist yet.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <param name="channelId"></param>
@@ -162,20 +164,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Links item to a channel. Creates item if such does not exist yet.
+        ///     Links item to a channel. Creates item if such does not exist yet.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <param name="channelId"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> CreateChannelLinkAsync(string thingUid, string channelId, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> CreateChannelLinkAsync(string thingUid, string channelId,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/things/{thingUid}/channels/{channelId}/link";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, token: token);
         }
 
         /// <summary>
-        /// Links item to a channel. Creates item if such does not exist yet.
+        ///     Links item to a channel. Creates item if such does not exist yet.
         /// </summary>
         /// <param name="thing"></param>
         /// <param name="channel"></param>
@@ -186,20 +189,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Links item to a channel. Creates item if such does not exist yet.
+        ///     Links item to a channel. Creates item if such does not exist yet.
         /// </summary>
         /// <param name="thing"></param>
         /// <param name="channel"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> CreateChannelLinkAsync(Thing thing, Channel channel, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> CreateChannelLinkAsync(Thing thing, Channel channel,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/things/{thing.Uid}/channels/{channel.Id}/link";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, token: token);
         }
 
         /// <summary>
-        /// Updates a thing.
+        ///     Updates a thing.
         /// </summary>
         /// <param name="thing"></param>
         /// <returns></returns>
@@ -209,7 +213,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Updates a thing.
+        ///     Updates a thing.
         /// </summary>
         /// <param name="thing"></param>
         /// <param name="token"></param>
@@ -221,7 +225,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Updates thing's configuration.
+        ///     Updates thing's configuration.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <param name="thingConfiguration"></param>
@@ -232,20 +236,22 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Updates thing's configuration.
+        ///     Updates thing's configuration.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <param name="thingConfiguration"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<Thing> UpdateThingConfigurationAsync(string thingUid, object thingConfiguration, CancellationToken token = default(CancellationToken))
+        public Task<Thing> UpdateThingConfigurationAsync(string thingUid, object thingConfiguration,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/things/{thingUid}/config";
-            return OpenHab.RestClient.ExecuteRequestAsync<Thing>(Method.PUT, resource, thingConfiguration, token: token);
+            return OpenHab.RestClient.ExecuteRequestAsync<Thing>(Method.PUT, resource, thingConfiguration,
+                token: token);
         }
 
         /// <summary>
-        /// Updates thing's configuration.
+        ///     Updates thing's configuration.
         /// </summary>
         /// <param name="thing"></param>
         /// <returns></returns>
@@ -255,19 +261,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Updates thing's configuration.
+        ///     Updates thing's configuration.
         /// </summary>
         /// <param name="thing"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<Thing> UpdateThingConfigurationAsync(Thing thing, CancellationToken token = default(CancellationToken))
+        public Task<Thing> UpdateThingConfigurationAsync(Thing thing,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/things/{thing.Uid}/config";
-            return OpenHab.RestClient.ExecuteRequestAsync<Thing>(Method.PUT, resource, thing.Configuration, RequestHeader.FullJson, token: token);
+            return OpenHab.RestClient.ExecuteRequestAsync<Thing>(Method.PUT, resource, thing.Configuration,
+                RequestHeader.FullJson, token);
         }
 
         /// <summary>
-        /// Update thing firmware.
+        ///     Update thing firmware.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="firmwareVersion"></param>
@@ -278,20 +286,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Update thing firmware.
+        ///     Update thing firmware.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="firmwareVersion"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> UpdateThingFirmwareAsync(string uid, string firmwareVersion, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> UpdateThingFirmwareAsync(string uid, string firmwareVersion,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/things/{uid}/firmware/{firmwareVersion}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, token: token);
         }
 
         /// <summary>
-        /// Removes a thing from the registry. Set 'force' to true if you want the thing to be removed immediately.
+        ///     Removes a thing from the registry. Set 'force' to true if you want the thing to be removed immediately.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="force"></param>
@@ -302,20 +311,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes a thing from the registry. Set 'force' to true if you want the thing to be removed immediately.
+        ///     Removes a thing from the registry. Set 'force' to true if you want the thing to be removed immediately.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="force"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> DeleteThingAsync(string uid, bool force = false, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> DeleteThingAsync(string uid, bool force = false,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/things/{uid}?force={force}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.DELETE, resource, token: token);
         }
 
         /// <summary>
-        /// Removes a thing from the registry. Set 'force' to true if you want the thing to be removed immediately.
+        ///     Removes a thing from the registry. Set 'force' to true if you want the thing to be removed immediately.
         /// </summary>
         /// <param name="thing"></param>
         /// <param name="force"></param>
@@ -326,20 +336,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes a thing from the registry. Set 'force' to true if you want the thing to be removed immediately.
+        ///     Removes a thing from the registry. Set 'force' to true if you want the thing to be removed immediately.
         /// </summary>
         /// <param name="thing"></param>
         /// <param name="force"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> DeleteThingAsync(Thing thing, bool force = false, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> DeleteThingAsync(Thing thing, bool force = false,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/things/{thing.Uid}?force={force}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.DELETE, resource, token: token);
         }
 
         /// <summary>
-        /// Unlinks item from a channel.
+        ///     Unlinks item from a channel.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <param name="channelId"></param>
@@ -350,20 +361,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Unlinks item from a channel.
+        ///     Unlinks item from a channel.
         /// </summary>
         /// <param name="thingUid"></param>
         /// <param name="channelId"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> DeleteChannelLinkAsync(string thingUid, string channelId, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> DeleteChannelLinkAsync(string thingUid, string channelId,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/things/{thingUid}/channels/{channelId}/link";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.DELETE, resource, token: token);
         }
 
         /// <summary>
-        /// Unlinks item from a channel.
+        ///     Unlinks item from a channel.
         /// </summary>
         /// <param name="thing"></param>
         /// <param name="channel"></param>
@@ -374,13 +386,14 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Unlinks item from a channel.
+        ///     Unlinks item from a channel.
         /// </summary>
         /// <param name="thing"></param>
         /// <param name="channel"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> DeleteChannelLinkAsync(Thing thing, Channel channel, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> DeleteChannelLinkAsync(Thing thing, Channel channel,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/things/{thing.Uid}/channels/{channel.Id}/link";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.DELETE, resource, token: token);

@@ -13,44 +13,15 @@ namespace OpenHAB.NetRestApi.Services
 {
     public class EventService
     {
-        #region EventHandlers
-        
-        public event ItemStateEventHandler ItemStateEventOccured;
-        public event ItemStateChangedEventHandler ItemStateChanged;
-        public event ItemCommandEventHandler ItemCommandEventOccured;
-        public event ItemAddedEventHandler ItemAdded;
-        public event ItemRemovedEventHandler ItemRemoved;
-        public event ItemChannelLinkAddedEventHandler ItemChannelLinkAdded;
-        public event ItemChannelLinkRemovedEventHandler ItemChannelLinkRemoved;
-
-        public event ThingStatusInfoEventHandler ThingStatusInfoEventOccured;
-        public event ThingStatusInfoChangedEventHandler ThingStatusInfoChanged;
-        public event ThingAddedEventHandler ThingAdded;
-        public event ThingUpdatedEventHandler ThingUpdated;
-        public event ThingRemovedEventHandler ThingRemoved;
-
-        public event InboxAddedEventHandler InboxAdded;
-        public event InboxRemovedEventHandler InboxRemoved;
-
-        public event RuleStatusInfoEventHandler RuleStatusInfoEventOccured;
-        public event RuleAddedEventHandler RuleAdded;
-        public event RuleUpdatedEventHandler RuleUpdated;
-        public event RuleRemovedEventHandler RuleRemoved;
-
-        public event ConfigStatusInfoEventHandler ConfigStatusInfoEventOccured;
-        public event PlayUrlEventHandler PlayUrlEventOccured;
-        public event UnknownEventHandler UnknownEventOccured;
-
-        #endregion
-
         /// <summary>
-        /// Initializes an asynchronous Rest prompt which is read and interpreted.
-        /// Results can be aquired by listening to the relevant event
+        ///     Initializes an asynchronous Rest prompt which is read and interpreted.
+        ///     Results can be aquired by listening to the relevant event
         /// </summary>
         public async void InitializeAsync()
         {
             await Task.Run(() =>
-            { // asynchronous stream reader
+            {
+                // asynchronous stream reader
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.Timeout = TimeSpan.FromMilliseconds(Timeout.Infinite);
@@ -206,5 +177,35 @@ namespace OpenHAB.NetRestApi.Services
             eventObject.Occured = timeOccured;
             return eventObject;
         }
+
+        #region EventHandlers
+
+        public event ItemStateEventHandler ItemStateEventOccured;
+        public event ItemStateChangedEventHandler ItemStateChanged;
+        public event ItemCommandEventHandler ItemCommandEventOccured;
+        public event ItemAddedEventHandler ItemAdded;
+        public event ItemRemovedEventHandler ItemRemoved;
+        public event ItemChannelLinkAddedEventHandler ItemChannelLinkAdded;
+        public event ItemChannelLinkRemovedEventHandler ItemChannelLinkRemoved;
+
+        public event ThingStatusInfoEventHandler ThingStatusInfoEventOccured;
+        public event ThingStatusInfoChangedEventHandler ThingStatusInfoChanged;
+        public event ThingAddedEventHandler ThingAdded;
+        public event ThingUpdatedEventHandler ThingUpdated;
+        public event ThingRemovedEventHandler ThingRemoved;
+
+        public event InboxAddedEventHandler InboxAdded;
+        public event InboxRemovedEventHandler InboxRemoved;
+
+        public event RuleStatusInfoEventHandler RuleStatusInfoEventOccured;
+        public event RuleAddedEventHandler RuleAdded;
+        public event RuleUpdatedEventHandler RuleUpdated;
+        public event RuleRemovedEventHandler RuleRemoved;
+
+        public event ConfigStatusInfoEventHandler ConfigStatusInfoEventOccured;
+        public event PlayUrlEventHandler PlayUrlEventOccured;
+        public event UnknownEventHandler UnknownEventOccured;
+
+        #endregion
     }
 }

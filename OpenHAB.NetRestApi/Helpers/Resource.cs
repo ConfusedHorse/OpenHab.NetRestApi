@@ -5,10 +5,6 @@ namespace OpenHAB.NetRestApi.Helpers
 {
     public sealed class ResourceParameter
     {
-        public string Name { get; }
-
-        public string Value { get; }
-
         public ResourceParameter(string name, string value)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -18,6 +14,10 @@ namespace OpenHAB.NetRestApi.Helpers
             Name = name;
             Value = value;
         }
+
+        public string Name { get; }
+
+        public string Value { get; }
     }
 
     public static class Resource
@@ -26,7 +26,7 @@ namespace OpenHAB.NetRestApi.Helpers
         private const string Delimiter = "&";
 
         /// <summary>
-        /// Returns a formatted Html parameter list
+        ///     Returns a formatted Html parameter list
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>

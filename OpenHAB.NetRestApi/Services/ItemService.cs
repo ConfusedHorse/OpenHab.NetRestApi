@@ -13,7 +13,7 @@ namespace OpenHAB.NetRestApi.Services
     public class ItemService
     {
         /// <summary>
-        /// Get all available items.
+        ///     Get all available items.
         /// </summary>
         /// <returns></returns>
         public List<Item> GetItems()
@@ -22,7 +22,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available items.
+        ///     Get all available items.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -33,7 +33,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available items.
+        ///     Get all available items.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="tag"></param>
@@ -45,15 +45,18 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available items.
+        ///     Get all available items.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="tag"></param>
         /// <param name="recursive"></param>
         /// <returns></returns>
-        public Task<List<Item>> GetItemsAsync(ChannelType type, string tag = default(string), bool recursive = default(bool), CancellationToken token = default(CancellationToken))
+        public Task<List<Item>> GetItemsAsync(ChannelType type, string tag = default(string),
+            bool recursive = default(bool), CancellationToken token = default(CancellationToken))
         {
-            var typeParameter = !string.IsNullOrWhiteSpace(type?.ItemType) ? new ResourceParameter("type", type.ItemType) : null;
+            var typeParameter = !string.IsNullOrWhiteSpace(type?.ItemType)
+                ? new ResourceParameter("type", type.ItemType)
+                : null;
             var tagsParameter = !string.IsNullOrWhiteSpace(tag) ? new ResourceParameter("tags", tag) : null;
             var recursiveParameter = new ResourceParameter("recursive", recursive.ToString());
 
@@ -63,7 +66,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available items.
+        ///     Get all available items.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="tag"></param>
@@ -75,13 +78,14 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available items.
+        ///     Get all available items.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="tag"></param>
         /// <param name="recursive"></param>
         /// <returns></returns>
-        public Task<List<Item>> GetItemsAsync(string type, string tag = default(string), bool recursive = default(bool), CancellationToken token = default(CancellationToken))
+        public Task<List<Item>> GetItemsAsync(string type, string tag = default(string), bool recursive = default(bool),
+            CancellationToken token = default(CancellationToken))
         {
             var typeParameter = !string.IsNullOrWhiteSpace(type) ? new ResourceParameter("type", type) : null;
             var tagsParameter = !string.IsNullOrWhiteSpace(tag) ? new ResourceParameter("tags", tag) : null;
@@ -93,7 +97,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets all available item types.
+        ///     Gets all available item types.
         /// </summary>
         /// <returns></returns>
         public List<string> GetTypes()
@@ -105,7 +109,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets all available item categories.
+        ///     Gets all available item categories.
         /// </summary>
         /// <returns></returns>
         public List<string> GetCategories()
@@ -117,7 +121,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets a single item.
+        ///     Gets a single item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <returns></returns>
@@ -127,7 +131,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets a single item.
+        ///     Gets a single item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="token"></param>
@@ -139,7 +143,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the state of an item.
+        ///     Gets the state of an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <returns></returns>
@@ -149,19 +153,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the state of an item.
+        ///     Gets the state of an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> GetItemStateAsync(string itemname, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> GetItemStateAsync(string itemname,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{itemname}/state";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.DELETE, resource, token: token);
         }
 
         /// <summary>
-        /// Sends a command to an item.
+        ///     Sends a command to an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="command"></param>
@@ -172,20 +177,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Sends a command to an item.
+        ///     Sends a command to an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="command"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> SendCommandAsync(string itemname, string command, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> SendCommandAsync(string itemname, string command,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{itemname}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, command, token: token);
         }
 
         /// <summary>
-        /// Sends a command to an item.
+        ///     Sends a command to an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="command"></param>
@@ -196,20 +202,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Sends a command to an item.
+        ///     Sends a command to an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="command"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> SendCommandAsync(string itemname, Command command, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> SendCommandAsync(string itemname, Command command,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{itemname}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, command.ToString(), token: token);
         }
 
         /// <summary>
-        /// Sends a command to an item.
+        ///     Sends a command to an item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="command"></param>
@@ -220,20 +227,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Sends a command to an item.
+        ///     Sends a command to an item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="command"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> SendCommandAsync(Item item, string command, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> SendCommandAsync(Item item, string command,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{item.Name}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, command, token: token);
         }
 
         /// <summary>
-        /// Adds a new item to the registry or updates the existing item.
+        ///     Adds a new item to the registry or updates the existing item.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
@@ -243,7 +251,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Adds a new item to the registry or updates the existing item.
+        ///     Adds a new item to the registry or updates the existing item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="token"></param>
@@ -255,7 +263,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Adds a new item to the registry or updates the existing item.
+        ///     Adds a new item to the registry or updates the existing item.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
@@ -265,7 +273,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Adds a new item to the registry or updates the existing item.
+        ///     Adds a new item to the registry or updates the existing item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="token"></param>
@@ -277,7 +285,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Updates the state of an item.
+        ///     Updates the state of an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="state"></param>
@@ -288,20 +296,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Updates the state of an item.
+        ///     Updates the state of an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="state"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> UpdateItemStateAsync(string itemname, string state, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> UpdateItemStateAsync(string itemname, string state,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{itemname}/state";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, state, token: token);
         }
 
         /// <summary>
-        /// Adds a tag to an item.
+        ///     Adds a tag to an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="tag"></param>
@@ -312,20 +321,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Adds a tag to an item.
+        ///     Adds a tag to an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="tag"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> CreateItemTagAsync(string itemname, string tag, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> CreateItemTagAsync(string itemname, string tag,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{itemname}/tags/{tag}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, token: token);
         }
 
         /// <summary>
-        /// Adds a tag to an item.
+        ///     Adds a tag to an item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="tag"></param>
@@ -336,20 +346,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Adds a tag to an item.
+        ///     Adds a tag to an item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="tag"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> CreateItemTagAsync(Item item, string tag, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> CreateItemTagAsync(Item item, string tag,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{item.Name}/tags/{tag}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, token: token);
         }
 
         /// <summary>
-        /// Adds a tag to an item.
+        ///     Adds a tag to an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="tag"></param>
@@ -360,20 +371,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Adds a tag to an item.
+        ///     Adds a tag to an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="tag"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> AddItemTagAsync(string itemname, string tag, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> AddItemTagAsync(string itemname, string tag,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{itemname}/tags/{tag}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, token: token);
         }
 
         /// <summary>
-        /// Adds a tag to an item.
+        ///     Adds a tag to an item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="tag"></param>
@@ -384,20 +396,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Adds a tag to an item.
+        ///     Adds a tag to an item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="tag"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> AddItemTagAsync(Item item, string tag, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> AddItemTagAsync(Item item, string tag,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{item.Name}/tags/{tag}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, token: token);
         }
 
         /// <summary>
-        /// Adds a new member to a group item.
+        ///     Adds a new member to a group item.
         /// </summary>
         /// <param name="itemName"></param>
         /// <param name="groupName"></param>
@@ -408,20 +421,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Adds a new member to a group item.
+        ///     Adds a new member to a group item.
         /// </summary>
         /// <param name="itemName"></param>
         /// <param name="groupName"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> AddItemToGroupAsync(string itemName, string groupName, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> AddItemToGroupAsync(string itemName, string groupName,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{groupName}/tags/{itemName}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, token: token);
         }
 
         /// <summary>
-        /// Adds a new member to a group item.
+        ///     Adds a new member to a group item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="group"></param>
@@ -432,20 +446,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Adds a new member to a group item.
+        ///     Adds a new member to a group item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="group"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> AddItemToGroupAsync(Item item, Item group, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> AddItemToGroupAsync(Item item, Item group,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{group.Name}/tags/{item.Name}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, token: token);
         }
 
         /// <summary>
-        /// Removes an item from the registry.
+        ///     Removes an item from the registry.
         /// </summary>
         /// <param name="itemname"></param>
         /// <returns></returns>
@@ -455,19 +470,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes an item from the registry.
+        ///     Removes an item from the registry.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> DeleteItemAsync(string itemname, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> DeleteItemAsync(string itemname,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{itemname}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.DELETE, resource, token: token);
         }
 
         /// <summary>
-        /// Removes an item from the registry.
+        ///     Removes an item from the registry.
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
@@ -477,7 +493,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes an item from the registry.
+        ///     Removes an item from the registry.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="token"></param>
@@ -489,7 +505,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes a tag from an item.
+        ///     Removes a tag from an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="tag"></param>
@@ -500,20 +516,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes a tag from an item.
+        ///     Removes a tag from an item.
         /// </summary>
         /// <param name="itemname"></param>
         /// <param name="tag"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> RemoveItemTagAsync(string itemname, string tag, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> RemoveItemTagAsync(string itemname, string tag,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{itemname}/tags/{tag}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.DELETE, resource, token: token);
         }
 
         /// <summary>
-        /// Removes a tag from an item.
+        ///     Removes a tag from an item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="tag"></param>
@@ -524,20 +541,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes a tag from an item.
+        ///     Removes a tag from an item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="tag"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> RemoveItemTagAsync(Item item, string tag, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> RemoveItemTagAsync(Item item, string tag,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{item.Name}/tags/{tag}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.DELETE, resource, token: token);
         }
 
         /// <summary>
-        /// Removes an existing member from a group item.
+        ///     Removes an existing member from a group item.
         /// </summary>
         /// <param name="itemName"></param>
         /// <param name="groupName"></param>
@@ -548,20 +566,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes an existing member from a group item.
+        ///     Removes an existing member from a group item.
         /// </summary>
         /// <param name="itemName"></param>
         /// <param name="groupName"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> RemoveItemFromGroupAsync(string itemName, string groupName, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> RemoveItemFromGroupAsync(string itemName, string groupName,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{groupName}/tags/{itemName}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.DELETE, resource, token: token);
         }
 
         /// <summary>
-        /// Removes an existing member from a group item.
+        ///     Removes an existing member from a group item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="group"></param>
@@ -572,13 +591,14 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes an existing member from a group item.
+        ///     Removes an existing member from a group item.
         /// </summary>
         /// <param name="item"></param>
         /// <param name="group"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> RemoveItemFromGroupAsync(Item item, Item group, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> RemoveItemFromGroupAsync(Item item, Item group,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/items/{group.Name}/tags/{item.Name}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.DELETE, resource, token: token);

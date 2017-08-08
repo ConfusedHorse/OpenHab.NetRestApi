@@ -10,7 +10,7 @@ namespace OpenHAB.NetRestApi.Services
     public class DiscoveryService
     {
         /// <summary>
-        /// Gets all bindings that support discovery.
+        ///     Gets all bindings that support discovery.
         /// </summary>
         /// <returns></returns>
         public List<string> GetBindings()
@@ -19,7 +19,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets all bindings that support discovery.
+        ///     Gets all bindings that support discovery.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -30,7 +30,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Starts asynchronous discovery process for a binding and returns the timeout in seconds of the discovery operation.
+        ///     Starts asynchronous discovery process for a binding and returns the timeout in seconds of the discovery operation.
         /// </summary>
         /// <param name="bindingId"></param>
         /// <returns></returns>
@@ -40,7 +40,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Starts asynchronous discovery process for a binding and returns the timeout in seconds of the discovery operation.
+        ///     Starts asynchronous discovery process for a binding and returns the timeout in seconds of the discovery operation.
         /// </summary>
         /// <param name="bindingId"></param>
         /// <param name="token"></param>
@@ -48,7 +48,8 @@ namespace OpenHAB.NetRestApi.Services
         public Task<int> GetTimeoutAsync(string bindingId, CancellationToken token = default(CancellationToken))
         {
             var resource = $"/discovery/bindings/{bindingId}/scan";
-            return OpenHab.RestClient.ExecuteRequestAsync<int>(Method.POST, resource, requestHeaders: RequestHeader.AcceptPlainText, token: token);
+            return OpenHab.RestClient.ExecuteRequestAsync<int>(Method.POST, resource,
+                requestHeaders: RequestHeader.AcceptPlainText, token: token);
         }
     }
 }

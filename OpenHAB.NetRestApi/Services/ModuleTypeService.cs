@@ -12,7 +12,7 @@ namespace OpenHAB.NetRestApi.Services
     public class ModuleTypeService
     {
         /// <summary>
-        /// Get all available module types.
+        ///     Get all available module types.
         /// </summary>
         /// <returns></returns>
         public List<ModuleType> GetModuleTypes()
@@ -21,7 +21,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available module types.
+        ///     Get all available module types.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -32,7 +32,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available module types.
+        ///     Get all available module types.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="tag"></param>
@@ -43,13 +43,14 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available module types.
+        ///     Get all available module types.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="tag"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<List<ModuleType>> GetModuleTypesAsync(string type, string tag = default(string), CancellationToken token = default(CancellationToken))
+        public Task<List<ModuleType>> GetModuleTypesAsync(string type, string tag = default(string),
+            CancellationToken token = default(CancellationToken))
         {
             var typeParameter = !string.IsNullOrWhiteSpace(type) ? new ResourceParameter("type", type) : null;
             var tagsParameter = !string.IsNullOrWhiteSpace(tag) ? new ResourceParameter("tags", tag) : null;
@@ -60,7 +61,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available module types.
+        ///     Get all available module types.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="tag"></param>
@@ -71,7 +72,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available module types of type "trigger"
+        ///     Get all available module types of type "trigger"
         /// </summary>
         /// <returns></returns>
         public List<ModuleType> GetTriggers()
@@ -80,7 +81,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available module types of type "condition"
+        ///     Get all available module types of type "condition"
         /// </summary>
         /// <returns></returns>
         public List<ModuleType> GetConditions()
@@ -89,7 +90,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available module types of type "action"
+        ///     Get all available module types of type "action"
         /// </summary>
         /// <returns></returns>
         public List<ModuleType> GetActions()
@@ -98,15 +99,18 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available module types.
+        ///     Get all available module types.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="tag"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<List<ModuleType>> GetModuleTypesAsync(RuleMemberType type, string tag = default(string), CancellationToken token = default(CancellationToken))
+        public Task<List<ModuleType>> GetModuleTypesAsync(RuleMemberType type, string tag = default(string),
+            CancellationToken token = default(CancellationToken))
         {
-            var typeParameter = !string.IsNullOrWhiteSpace(type.ToString()) ? new ResourceParameter("type", type.ToString()) : null;
+            var typeParameter = !string.IsNullOrWhiteSpace(type.ToString())
+                ? new ResourceParameter("type", type.ToString())
+                : null;
             var tagsParameter = !string.IsNullOrWhiteSpace(tag) ? new ResourceParameter("tags", tag) : null;
 
             var parameters = Resource.FormatParameters(typeParameter, tagsParameter);
@@ -115,7 +119,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets a module type corresponding to the given UID.
+        ///     Gets a module type corresponding to the given UID.
         /// </summary>
         /// <param name="moduleTypeUid"></param>
         /// <returns></returns>
@@ -125,12 +129,13 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets a module type corresponding to the given UID.
+        ///     Gets a module type corresponding to the given UID.
         /// </summary>
         /// <param name="moduleTypeUid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<ModuleType> GetModuleTypeAsync(string moduleTypeUid, CancellationToken token = default(CancellationToken))
+        public Task<ModuleType> GetModuleTypeAsync(string moduleTypeUid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/module-types/{moduleTypeUid}";
             return OpenHab.RestClient.ExecuteRequestAsync<ModuleType>(Method.GET, resource, token: token);

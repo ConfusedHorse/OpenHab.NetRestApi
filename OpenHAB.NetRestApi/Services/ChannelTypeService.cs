@@ -10,7 +10,7 @@ namespace OpenHAB.NetRestApi.Services
     public class ChannelTypeService
     {
         /// <summary>
-        /// Gets all available channel types.
+        ///     Gets all available channel types.
         /// </summary>
         /// <returns></returns>
         public List<ChannelType> GetChannelTypes()
@@ -19,7 +19,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets all available channel types.
+        ///     Gets all available channel types.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -30,7 +30,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets channel type by UID.
+        ///     Gets channel type by UID.
         /// </summary>
         /// <param name="channelTypeId"></param>
         /// <returns></returns>
@@ -40,12 +40,13 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets channel type by UID.
+        ///     Gets channel type by UID.
         /// </summary>
         /// <param name="channelTypeId"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<ChannelType> GetChannelTypeAsync(string channelTypeId, CancellationToken token = default(CancellationToken))
+        public Task<ChannelType> GetChannelTypeAsync(string channelTypeId,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/channel-types/{channelTypeId}";
             return OpenHab.RestClient.ExecuteRequestAsync<ChannelType>(Method.GET, resource, token: token);

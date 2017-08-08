@@ -10,7 +10,7 @@ namespace OpenHAB.NetRestApi.Services
     public class TemplateService
     {
         /// <summary>
-        /// Get all available templates.
+        ///     Get all available templates.
         /// </summary>
         /// <returns></returns>
         public List<Template> GetTemplates()
@@ -19,7 +19,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available templates.
+        ///     Get all available templates.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -30,7 +30,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets a template corresponding to the given UID.
+        ///     Gets a template corresponding to the given UID.
         /// </summary>
         /// <param name="templateUid"></param>
         /// <returns></returns>
@@ -40,7 +40,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets a template corresponding to the given UID.
+        ///     Gets a template corresponding to the given UID.
         /// </summary>
         /// <param name="templateUid"></param>
         /// <param name="token"></param>

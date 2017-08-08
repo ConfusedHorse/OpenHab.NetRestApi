@@ -10,7 +10,7 @@ namespace OpenHAB.NetRestApi.Services
     public class ConfigDescriptionService
     {
         /// <summary>
-        /// Gets all available config descriptions.
+        ///     Gets all available config descriptions.
         /// </summary>
         /// <returns></returns>
         public List<ServiceConfiguration> GetConfigDescriptions()
@@ -19,18 +19,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets all available config descriptions.
+        ///     Gets all available config descriptions.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<List<ServiceConfiguration>> GetConfigDescriptionsAsync(CancellationToken token = default(CancellationToken))
+        public Task<List<ServiceConfiguration>> GetConfigDescriptionsAsync(
+            CancellationToken token = default(CancellationToken))
         {
             const string resource = "/config-descriptions";
-            return OpenHab.RestClient.ExecuteRequestAsync<List<ServiceConfiguration>>(Method.GET, resource, token: token);
+            return OpenHab.RestClient.ExecuteRequestAsync<List<ServiceConfiguration>>(Method.GET, resource,
+                token: token);
         }
 
         /// <summary>
-        /// Gets a config description by URI.
+        ///     Gets a config description by URI.
         /// </summary>
         /// <param name="configDescriptionUri"></param>
         /// <returns></returns>
@@ -40,12 +42,13 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets a config description by URI.
+        ///     Gets a config description by URI.
         /// </summary>
         /// <param name="configDescriptionUri"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<ServiceConfiguration> GetConfigDescriptionAsync(string configDescriptionUri, CancellationToken token = default(CancellationToken))
+        public Task<ServiceConfiguration> GetConfigDescriptionAsync(string configDescriptionUri,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/config-descriptions/{configDescriptionUri}";
             return OpenHab.RestClient.ExecuteRequestAsync<ServiceConfiguration>(Method.GET, resource, token: token);

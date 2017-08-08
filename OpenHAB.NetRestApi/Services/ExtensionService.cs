@@ -10,7 +10,7 @@ namespace OpenHAB.NetRestApi.Services
     public class ExtensionService
     {
         /// <summary>
-        /// Get all extensions.
+        ///     Get all extensions.
         /// </summary>
         /// <returns></returns>
         public List<Extension> GetExtensions()
@@ -19,7 +19,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all extensions.
+        ///     Get all extensions.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -30,7 +30,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all extension types.
+        ///     Get all extension types.
         /// </summary>
         /// <returns></returns>
         public List<ExtensionType> GetExtensionTypes()
@@ -39,7 +39,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all extension types.
+        ///     Get all extension types.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -50,7 +50,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get extension with given ID.
+        ///     Get extension with given ID.
         /// </summary>
         /// <param name="extensionId"></param>
         /// <returns></returns>
@@ -60,19 +60,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get extension with given ID.
+        ///     Get extension with given ID.
         /// </summary>
         /// <param name="extensionId"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<Extension> GetExtensionAsync(string extensionId, CancellationToken token = default(CancellationToken))
+        public Task<Extension> GetExtensionAsync(string extensionId,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/extensions/{extensionId}";
             return OpenHab.RestClient.ExecuteRequestAsync<Extension>(Method.GET, resource, token: token);
         }
 
         /// <summary>
-        /// Installs the extension from the given URL.
+        ///     Installs the extension from the given URL.
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
@@ -82,19 +83,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Installs the extension from the given URL.
+        ///     Installs the extension from the given URL.
         /// </summary>
         /// <param name="url"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> InstallExtensionByUrlAsync(string url, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> InstallExtensionByUrlAsync(string url,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/extensions/url/{url}/install";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, token: token);
         }
 
         /// <summary>
-        /// Installs the extension with the given ID.
+        ///     Installs the extension with the given ID.
         /// </summary>
         /// <param name="extensionId"></param>
         /// <returns></returns>
@@ -104,19 +106,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Installs the extension with the given ID.
+        ///     Installs the extension with the given ID.
         /// </summary>
         /// <param name="extensionId"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> InstallExtensionAsync(string extensionId, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> InstallExtensionAsync(string extensionId,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/extensions/{extensionId}/install";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, token: token);
         }
 
         /// <summary>
-        /// Uninstalls the extension with the given ID.
+        ///     Uninstalls the extension with the given ID.
         /// </summary>
         /// <param name="extensionId"></param>
         /// <returns></returns>
@@ -126,12 +129,13 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Uninstalls the extension with the given ID.
+        ///     Uninstalls the extension with the given ID.
         /// </summary>
         /// <param name="extensionId"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> UninstallExtensionAsync(string extensionId, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> UninstallExtensionAsync(string extensionId,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/extensions/{extensionId}/uninstall";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, token: token);

@@ -10,7 +10,7 @@ namespace OpenHAB.NetRestApi.Services
     public class ServiceService
     {
         /// <summary>
-        /// Get all configurable services.
+        ///     Get all configurable services.
         /// </summary>
         /// <returns></returns>
         public List<Service> GetServices()
@@ -19,7 +19,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all configurable services.
+        ///     Get all configurable services.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -30,7 +30,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get configurable service for given service ID.
+        ///     Get configurable service for given service ID.
         /// </summary>
         /// <param name="serviceId"></param>
         /// <returns></returns>
@@ -40,7 +40,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get configurable service for given service ID.
+        ///     Get configurable service for given service ID.
         /// </summary>
         /// <param name="serviceId"></param>
         /// <param name="token"></param>
@@ -53,7 +53,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get service configuration for given service ID.
+        ///     Get service configuration for given service ID.
         /// </summary>
         /// <param name="serviceId"></param>
         /// <returns></returns>
@@ -63,19 +63,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get service configuration for given service ID.
+        ///     Get service configuration for given service ID.
         /// </summary>
         /// <param name="serviceId"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<object> GetServiceConfigurationAsync(string serviceId, CancellationToken token = default(CancellationToken))
+        public Task<object> GetServiceConfigurationAsync(string serviceId,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/services/{serviceId}/config";
             return OpenHab.RestClient.ExecuteRequestAsync<object>(Method.GET, resource, token: token);
         }
 
         /// <summary>
-        /// Updates a service configuration for given service ID and returns the old configuration.
+        ///     Updates a service configuration for given service ID and returns the old configuration.
         /// </summary>
         /// <param name="serviceId"></param>
         /// <param name="configuration"></param>
@@ -86,20 +87,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Updates a service configuration for given service ID and returns the old configuration.
+        ///     Updates a service configuration for given service ID and returns the old configuration.
         /// </summary>
         /// <param name="serviceId"></param>
         /// <param name="configuration"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<object> UpdateServiceConfigurationAsync(string serviceId, object configuration, CancellationToken token = default(CancellationToken))
+        public Task<object> UpdateServiceConfigurationAsync(string serviceId, object configuration,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/services/{serviceId}/config";
             return OpenHab.RestClient.ExecuteRequestAsync<object>(Method.PUT, resource, configuration, token: token);
         }
 
         /// <summary>
-        /// Deletes a service configuration for given service ID and returns the old configuration.
+        ///     Deletes a service configuration for given service ID and returns the old configuration.
         /// </summary>
         /// <param name="serviceId"></param>
         /// <returns></returns>
@@ -109,12 +111,13 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Deletes a service configuration for given service ID and returns the old configuration.
+        ///     Deletes a service configuration for given service ID and returns the old configuration.
         /// </summary>
         /// <param name="serviceId"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<object> DeleteServiceConfigurationAsync(string serviceId, CancellationToken token = default(CancellationToken))
+        public Task<object> DeleteServiceConfigurationAsync(string serviceId,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/services/{serviceId}/config";
             return OpenHab.RestClient.ExecuteRequestAsync<object>(Method.DELETE, resource, token: token);

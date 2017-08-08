@@ -12,7 +12,7 @@ namespace OpenHAB.NetRestApi.Services
     public class SitemapService
     {
         /// <summary>
-        /// Get all available sitemaps.
+        ///     Get all available sitemaps.
         /// </summary>
         /// <returns></returns>
         public List<Sitemap> GetSitemaps()
@@ -21,7 +21,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get all available sitemaps.
+        ///     Get all available sitemaps.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -32,7 +32,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get sitemap by name.
+        ///     Get sitemap by name.
         /// </summary>
         /// <param name="sitemapName"></param>
         /// <param name="type"></param>
@@ -43,7 +43,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get sitemap by name.
+        ///     Get sitemap by name.
         /// </summary>
         /// <param name="sitemapName"></param>
         /// <param name="type"></param>
@@ -54,7 +54,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get the default sitemap.
+        ///     Get the default sitemap.
         /// </summary>
         /// <returns></returns>
         public Sitemap GetDefaultSitemap()
@@ -63,13 +63,14 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get sitemap by name.
+        ///     Get sitemap by name.
         /// </summary>
         /// <param name="sitemapName"></param>
         /// <param name="type"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<Sitemap> GetSitemapAsync(string sitemapName, string type = default(string), CancellationToken token = default(CancellationToken))
+        public Task<Sitemap> GetSitemapAsync(string sitemapName, string type = default(string),
+            CancellationToken token = default(CancellationToken))
         {
             var typeParameter = !string.IsNullOrWhiteSpace(type) ? new ResourceParameter("type", type) : null;
             var jsonParameter = new ResourceParameter("jsoncallback", "callback");
@@ -80,7 +81,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Polls the data for a sitemap.
+        ///     Polls the data for a sitemap.
         /// </summary>
         /// <param name="sitemapName"></param>
         /// <param name="pageId"></param>
@@ -92,16 +93,19 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Polls the data for a sitemap.
+        ///     Polls the data for a sitemap.
         /// </summary>
         /// <param name="sitemapName"></param>
         /// <param name="pageId"></param>
         /// <param name="subscriptionId"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<Page> GetPageAsync(string sitemapName, string pageId, string subscriptionId = default(string), CancellationToken token = default(CancellationToken))
+        public Task<Page> GetPageAsync(string sitemapName, string pageId, string subscriptionId = default(string),
+            CancellationToken token = default(CancellationToken))
         {
-            var subsciptionParameter = !string.IsNullOrWhiteSpace(subscriptionId) ? new ResourceParameter("subscriptionid", subscriptionId) : null;
+            var subsciptionParameter = !string.IsNullOrWhiteSpace(subscriptionId)
+                ? new ResourceParameter("subscriptionid", subscriptionId)
+                : null;
 
             var parameters = Resource.FormatParameters(subsciptionParameter);
             var resource = $"/sitemaps/{sitemapName}/{pageId}{parameters}";
@@ -112,7 +116,7 @@ namespace OpenHAB.NetRestApi.Services
         //GET /sitemaps/events/{subscriptionid}
 
         /// <summary>
-        /// Creates a sitemap event subscription.
+        ///     Creates a sitemap event subscription.
         /// </summary>
         /// <returns></returns>
         public Subscription Subscribe()
@@ -121,7 +125,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Creates a sitemap event subscription.
+        ///     Creates a sitemap event subscription.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>

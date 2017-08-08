@@ -10,7 +10,7 @@ namespace OpenHAB.NetRestApi.Services
     public class LinkService
     {
         /// <summary>
-        /// Gets all available links.
+        ///     Gets all available links.
         /// </summary>
         /// <returns></returns>
         public List<Link> GetLinks()
@@ -19,7 +19,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets all available links.
+        ///     Gets all available links.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -30,7 +30,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Tells whether automatic link mode is active or not.
+        ///     Tells whether automatic link mode is active or not.
         /// </summary>
         /// <returns></returns>
         public bool AutoLink()
@@ -39,7 +39,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Tells whether automatic link mode is active or not.
+        ///     Tells whether automatic link mode is active or not.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
@@ -50,7 +50,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Links item to a channel.
+        ///     Links item to a channel.
         /// </summary>
         /// <param name="itemName"></param>
         /// <param name="channelUid"></param>
@@ -61,20 +61,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Links item to a channel.
+        ///     Links item to a channel.
         /// </summary>
         /// <param name="itemName"></param>
         /// <param name="channelUid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> LinkChannelAsync(string itemName, string channelUid, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> LinkChannelAsync(string itemName, string channelUid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/links/{itemName}/{channelUid}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, token: token);
         }
 
         /// <summary>
-        /// Unlinks item from a channel.
+        ///     Unlinks item from a channel.
         /// </summary>
         /// <param name="itemName"></param>
         /// <param name="channelUid"></param>
@@ -85,13 +86,14 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Unlinks item from a channel.
+        ///     Unlinks item from a channel.
         /// </summary>
         /// <param name="itemName"></param>
         /// <param name="channelUid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> UnlinksChannelAsync(string itemName, string channelUid, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> UnlinksChannelAsync(string itemName, string channelUid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/links/{itemName}/{channelUid}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.DELETE, resource, token: token);

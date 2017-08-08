@@ -36,10 +36,12 @@ namespace OpenHAB.NetRestApi.Services
             return SendMessageAsync(message).Result.Content;
         }
 
-        public Task<IRestResponse> SendMessageAsync(string message, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> SendMessageAsync(string message,
+            CancellationToken token = default(CancellationToken))
         {
             const string resource = "/voice/interpreters";
-            return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, message, RequestHeader.ContentPlainText & RequestHeader.AcceptPlainText, token);
+            return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, message,
+                RequestHeader.ContentPlainText & RequestHeader.AcceptPlainText, token);
         }
 
         public string SendMessage(string id, string message, string locale = null)
@@ -49,13 +51,16 @@ namespace OpenHAB.NetRestApi.Services
                 : SendMessageAsync(id, message, locale).Result.Content;
         }
 
-        public Task<IRestResponse> SendMessageAsync(string id, string message, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> SendMessageAsync(string id, string message,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/voice/interpreters/{id}";
-            return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, message, RequestHeader.ContentPlainText & RequestHeader.AcceptPlainText, token);
+            return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, message,
+                RequestHeader.ContentPlainText & RequestHeader.AcceptPlainText, token);
         }
 
-        public Task<IRestResponse> SendMessageAsync(string id, string message, string locale, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> SendMessageAsync(string id, string message, string locale,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/voice/interpreters/{id}";
             var localeHeader = new RequestHeader("Accept-Language", locale);

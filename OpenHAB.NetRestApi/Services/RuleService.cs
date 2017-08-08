@@ -13,7 +13,7 @@ namespace OpenHAB.NetRestApi.Services
     public class RuleService
     {
         /// <summary>
-        /// Get available rules, optionally filtered by prefix.
+        ///     Get available rules, optionally filtered by prefix.
         /// </summary>
         /// <param name="prefix"></param>
         /// <returns></returns>
@@ -23,7 +23,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get available rules, optionally filtered by tags and/or prefix.
+        ///     Get available rules, optionally filtered by tags and/or prefix.
         /// </summary>
         /// <param name="prefix"></param>
         /// <param name="tags"></param>
@@ -34,13 +34,14 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Get available rules, optionally filtered by tags and/or prefix.
+        ///     Get available rules, optionally filtered by tags and/or prefix.
         /// </summary>
         /// <param name="prefix"></param>
         /// <param name="tags"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<List<Rule>> GetRulesAsync(string prefix, string[] tags, CancellationToken token = default(CancellationToken))
+        public Task<List<Rule>> GetRulesAsync(string prefix, string[] tags,
+            CancellationToken token = default(CancellationToken))
         {
             var prefixParamater = !string.IsNullOrWhiteSpace(prefix) ? new ResourceParameter("prefix", prefix) : null;
             var tagParameters = tags?.Select(t => new ResourceParameter("tags", t)).ToList();
@@ -54,7 +55,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the rule corresponding to the given UID.
+        ///     Gets the rule corresponding to the given UID.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -64,7 +65,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the rule corresponding to the given UID.
+        ///     Gets the rule corresponding to the given UID.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="token"></param>
@@ -76,7 +77,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the rule actions.
+        ///     Gets the rule actions.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -86,19 +87,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the rule actions.
+        ///     Gets the rule actions.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<List<ModuleType>> GetRuleActionsAsync(string uid, CancellationToken token = default(CancellationToken))
+        public Task<List<ModuleType>> GetRuleActionsAsync(string uid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/rules/{uid}/actions";
             return OpenHab.RestClient.ExecuteRequestAsync<List<ModuleType>>(Method.GET, resource, token: token);
         }
 
         /// <summary>
-        /// Gets the rule conditions.
+        ///     Gets the rule conditions.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -108,19 +110,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the rule conditions.
+        ///     Gets the rule conditions.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<List<ModuleType>> GetRuleConditionsAsync(string uid, CancellationToken token = default(CancellationToken))
+        public Task<List<ModuleType>> GetRuleConditionsAsync(string uid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/rules/{uid}/conditions";
             return OpenHab.RestClient.ExecuteRequestAsync<List<ModuleType>>(Method.GET, resource, token: token);
         }
 
         /// <summary>
-        /// Gets the rule triggers.
+        ///     Gets the rule triggers.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -130,19 +133,20 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the rule triggers.
+        ///     Gets the rule triggers.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<List<ModuleType>> GetRuleTriggersAsync(string uid, CancellationToken token = default(CancellationToken))
+        public Task<List<ModuleType>> GetRuleTriggersAsync(string uid,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/rules/{uid}/triggers";
             return OpenHab.RestClient.ExecuteRequestAsync<List<ModuleType>>(Method.GET, resource, token: token);
         }
 
         /// <summary>
-        /// Gets the rule configuration values.
+        ///     Gets the rule configuration values.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -152,7 +156,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the rule configuration values.
+        ///     Gets the rule configuration values.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="token"></param>
@@ -164,7 +168,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the rule's module corresponding to the given Category and ID.
+        ///     Gets the rule's module corresponding to the given Category and ID.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="moduleCategory"></param>
@@ -176,7 +180,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the rule's module corresponding to the given Category and ID.
+        ///     Gets the rule's module corresponding to the given Category and ID.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="moduleCategory"></param>
@@ -188,21 +192,22 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the rule's module corresponding to the given Category and ID.
+        ///     Gets the rule's module corresponding to the given Category and ID.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="moduleCategory"></param>
         /// <param name="id"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<ModuleType> GetRuleModuleAsync(string uid, string moduleCategory, string id, CancellationToken token = default(CancellationToken))
+        public Task<ModuleType> GetRuleModuleAsync(string uid, string moduleCategory, string id,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/rules/{uid}/{moduleCategory}/{id}";
             return OpenHab.RestClient.ExecuteRequestAsync<ModuleType>(Method.GET, resource, token: token);
         }
 
         /// <summary>
-        /// Gets the module's configuration.
+        ///     Gets the module's configuration.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="moduleCategory"></param>
@@ -214,7 +219,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the module's configuration.
+        ///     Gets the module's configuration.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="moduleCategory"></param>
@@ -226,21 +231,22 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the module's configuration.
+        ///     Gets the module's configuration.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="moduleCategory"></param>
         /// <param name="id"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<object> GetRuleModuleConfigurationAsync(string uid, string moduleCategory, string id, CancellationToken token = default(CancellationToken))
+        public Task<object> GetRuleModuleConfigurationAsync(string uid, string moduleCategory, string id,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/rules/{uid}/{moduleCategory}/{id}/config";
             return OpenHab.RestClient.ExecuteRequestAsync<object>(Method.GET, resource, token: token);
         }
 
         /// <summary>
-        /// Gets the module's configuration parameter.
+        ///     Gets the module's configuration parameter.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="moduleCategory"></param>
@@ -253,20 +259,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Gets the module's configuration parameter.
+        ///     Gets the module's configuration parameter.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="moduleCategory"></param>
         /// <param name="id"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public string GetRuleModuleCGetRuleModuleConfigurationParameteronfiguration(string uid, RuleModuleCategory moduleCategory, string id, string param)
+        public string GetRuleModuleCGetRuleModuleConfigurationParameteronfiguration(string uid,
+            RuleModuleCategory moduleCategory, string id, string param)
         {
             return GetRuleModuleConfigurationParameterAsync(uid, moduleCategory.ToString(), id, param).Result.Content;
         }
 
         /// <summary>
-        /// Gets the module's configuration parameter.
+        ///     Gets the module's configuration parameter.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="moduleCategory"></param>
@@ -274,14 +281,15 @@ namespace OpenHAB.NetRestApi.Services
         /// <param name="param"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> GetRuleModuleConfigurationParameterAsync(string uid, string moduleCategory, string id, string param, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> GetRuleModuleConfigurationParameterAsync(string uid, string moduleCategory,
+            string id, string param, CancellationToken token = default(CancellationToken))
         {
             var resource = $"/rules/{uid}/{moduleCategory}/{id}/config/{param}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.GET, resource, token: token);
         }
 
         /// <summary>
-        /// Creates a rule.
+        ///     Creates a rule.
         /// </summary>
         /// <param name="rule"></param>
         /// <returns></returns>
@@ -291,7 +299,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Creates a rule.
+        ///     Creates a rule.
         /// </summary>
         /// <param name="rule"></param>
         /// <param name="token"></param>
@@ -303,7 +311,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Sets the rule enabled status to true.
+        ///     Sets the rule enabled status to true.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -313,7 +321,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Sets the rule enabled status to true.
+        ///     Sets the rule enabled status to true.
         /// </summary>
         /// <param name="rule"></param>
         /// <returns></returns>
@@ -323,7 +331,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Sets the rule enabled status to false.
+        ///     Sets the rule enabled status to false.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -333,7 +341,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Sets the rule enabled status to false.
+        ///     Sets the rule enabled status to false.
         /// </summary>
         /// <param name="rule"></param>
         /// <returns></returns>
@@ -343,20 +351,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Sets the rule enabled status.
+        ///     Sets the rule enabled status.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="enable"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> EnableRuleAsync(string uid, bool enable, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> EnableRuleAsync(string uid, bool enable,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/rules/{uid}/enable";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.POST, resource, enable, token: token);
         }
 
         /// <summary>
-        /// Executes actions of the rule.
+        ///     Executes actions of the rule.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -366,7 +375,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Executes actions of the rule.
+        ///     Executes actions of the rule.
         /// </summary>
         /// <param name="rule"></param>
         /// <returns></returns>
@@ -376,7 +385,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Executes actions of the rule.
+        ///     Executes actions of the rule.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="token"></param>
@@ -388,7 +397,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Updates an existing rule.
+        ///     Updates an existing rule.
         /// </summary>
         /// <param name="rule"></param>
         /// <returns></returns>
@@ -398,7 +407,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Updates an existing rule.
+        ///     Updates an existing rule.
         /// </summary>
         /// <param name="rule"></param>
         /// <param name="token"></param>
@@ -410,7 +419,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Sets the rule configuration values.
+        ///     Sets the rule configuration values.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="configuration"></param>
@@ -421,7 +430,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Sets the rule configuration values.
+        ///     Sets the rule configuration values.
         /// </summary>
         /// <param name="rule"></param>
         /// <param name="configuration"></param>
@@ -432,20 +441,21 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Sets the rule configuration values.
+        ///     Sets the rule configuration values.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="configuration"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> SetRuleConfigurationAsync(string uid, object configuration, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> SetRuleConfigurationAsync(string uid, object configuration,
+            CancellationToken token = default(CancellationToken))
         {
             var resource = $"/rules/{uid}/config";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, configuration, token: token);
         }
 
         /// <summary>
-        /// Sets the module's configuration parameter value.
+        ///     Sets the module's configuration parameter value.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="moduleCategory"></param>
@@ -453,13 +463,14 @@ namespace OpenHAB.NetRestApi.Services
         /// <param name="param"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public string SetRuleModuleConfigurationParameter(string uid, string moduleCategory, string id, string param, string value)
+        public string SetRuleModuleConfigurationParameter(string uid, string moduleCategory, string id, string param,
+            string value)
         {
             return SetRuleModuleConfigurationParameterAsync(uid, moduleCategory, id, param, value).Result.Content;
         }
 
         /// <summary>
-        /// Sets the module's configuration parameter value.
+        ///     Sets the module's configuration parameter value.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="moduleCategory"></param>
@@ -467,13 +478,15 @@ namespace OpenHAB.NetRestApi.Services
         /// <param name="param"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public string SetRuleModuleConfigurationParameter(string uid, RuleModuleCategory moduleCategory, string id, string param, string value)
+        public string SetRuleModuleConfigurationParameter(string uid, RuleModuleCategory moduleCategory, string id,
+            string param, string value)
         {
-            return SetRuleModuleConfigurationParameterAsync(uid, moduleCategory.ToString(), id, param, value).Result.Content;
+            return SetRuleModuleConfigurationParameterAsync(uid, moduleCategory.ToString(), id, param, value).Result
+                .Content;
         }
 
         /// <summary>
-        /// Sets the module's configuration parameter value.
+        ///     Sets the module's configuration parameter value.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="moduleCategory"></param>
@@ -482,14 +495,15 @@ namespace OpenHAB.NetRestApi.Services
         /// <param name="value"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<IRestResponse> SetRuleModuleConfigurationParameterAsync(string uid, string moduleCategory, string id, string param, string value, CancellationToken token = default(CancellationToken))
+        public Task<IRestResponse> SetRuleModuleConfigurationParameterAsync(string uid, string moduleCategory,
+            string id, string param, string value, CancellationToken token = default(CancellationToken))
         {
             var resource = $"/rules/{uid}/{moduleCategory}/{id}/config/{param}";
             return OpenHab.RestClient.ExecuteRequestAsync(Method.PUT, resource, value, token: token);
         }
 
         /// <summary>
-        /// Removes an existing rule corresponding to the given UID.
+        ///     Removes an existing rule corresponding to the given UID.
         /// </summary>
         /// <param name="uid"></param>
         /// <returns></returns>
@@ -499,7 +513,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes an existing rule.
+        ///     Removes an existing rule.
         /// </summary>
         /// <param name="rule"></param>
         /// <returns></returns>
@@ -509,7 +523,7 @@ namespace OpenHAB.NetRestApi.Services
         }
 
         /// <summary>
-        /// Removes an existing rule corresponding to the given UID.
+        ///     Removes an existing rule corresponding to the given UID.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="token"></param>
