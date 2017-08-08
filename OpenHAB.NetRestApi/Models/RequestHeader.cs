@@ -52,6 +52,11 @@ namespace OpenHAB.NetRestApi.Models
             return string.Equals(Name, other.Name) && string.Equals(Value, other.Value);
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         #endregion
 
         #region Presets

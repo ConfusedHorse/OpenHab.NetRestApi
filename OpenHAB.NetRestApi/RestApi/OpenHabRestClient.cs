@@ -147,5 +147,10 @@ namespace OpenHAB.NetRestApi.RestApi
             _uuidService = null;
             _voiceService = null;
         }
+
+        public override string ToString()
+        {
+            return Url ?? GetType().ToString();
+        }
     }
 }
