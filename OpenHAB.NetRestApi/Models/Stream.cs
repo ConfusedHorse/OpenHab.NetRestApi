@@ -2,7 +2,7 @@
 
 namespace OpenHAB.NetRestApi.Models
 {
-    public class EntityStream
+    public class Stream
     {
         [JsonProperty("bufferSize")]
         public int BufferSize { get; set; }
