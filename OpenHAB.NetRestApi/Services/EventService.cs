@@ -13,12 +13,15 @@ namespace OpenHAB.NetRestApi.Services
 {
     public class EventService
     {
+        private bool _abortionRequested;
+
         /// <summary>
         ///     Initializes an asynchronous Rest prompt which is read and interpreted.
         ///     Results can be aquired by listening to the relevant event
         /// </summary>
         public async void InitializeAsync()
         {
+            _abortionRequested = false;
             await Task.Run(() =>
             {
                 // asynchronous stream reader
@@ -33,6 +36,8 @@ namespace OpenHAB.NetRestApi.Services
                         var dataTemplate = new Regex(@"data:\s({.*})");
                         while (!reader.EndOfStream)
                         {
+                            if (_abortionRequested) break;
+
                             var currentLine = reader.ReadLine();
                             if (currentLine == null) continue;
 
@@ -44,6 +49,11 @@ namespace OpenHAB.NetRestApi.Services
                     }
                 }
             });
+        }
+
+        public void TerminateAsync()
+        {
+            _abortionRequested = true;
         }
 
         private void RaiseEvent(string data)
@@ -76,6 +86,10 @@ namespace OpenHAB.NetRestApi.Services
                 case "ItemRemovedEvent":
                     var itemRemovedEvent = AssembleEvent<ItemRemovedEvent>(json);
                     ItemRemoved?.Invoke(OpenHab.RestClient, itemRemovedEvent);
+                    break;
+                case "ItemUpdatedEvent":
+                    var itemUpdatedEvent = AssembleEvent<ItemUpdatedEvent>(json);
+                    ItemUpdated?.Invoke(OpenHab.RestClient, itemUpdatedEvent);
                     break;
                 case "ItemChannelLinkAddedEvent":
                     var itemChannelLinkAddedEvent = AssembleEvent<ItemChannelLinkAddedEvent>(json);
@@ -185,6 +199,7 @@ namespace OpenHAB.NetRestApi.Services
         public event ItemCommandEventHandler ItemCommandEventOccured;
         public event ItemAddedEventHandler ItemAdded;
         public event ItemRemovedEventHandler ItemRemoved;
+        public event ItemUpdatedEventHandler ItemUpdated;
         public event ItemChannelLinkAddedEventHandler ItemChannelLinkAdded;
         public event ItemChannelLinkRemovedEventHandler ItemChannelLinkRemoved;
 
