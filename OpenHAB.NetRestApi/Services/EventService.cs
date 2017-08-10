@@ -23,34 +23,50 @@ namespace OpenHAB.NetRestApi.Services
         public async void InitializeAsync()
         {
             _abortionRequested = false;
-            await Task.Run(() =>
+            try
             {
-                // asynchronous stream reader
-                using (var httpClient = new HttpClient())
+                Debug.WriteLine("Initialize Event Listener...");
+                await Task.Run(() =>
                 {
-                    httpClient.Timeout = TimeSpan.FromMilliseconds(Timeout.Infinite);
-                    var requestUri = $"{OpenHab.RestClient.Url}/events";
-                    var stream = httpClient.GetStreamAsync(requestUri).Result;
-
-                    using (var reader = new StreamReader(stream))
+                    // asynchronous stream reader
+                    using (var httpClient = new HttpClient())
                     {
-                        var dataTemplate = new Regex(@"data:\s({.*})");
-                        while (!reader.EndOfStream)
+                        httpClient.Timeout = TimeSpan.FromMilliseconds(Timeout.Infinite);
+                        var requestUri = $"{OpenHab.RestClient.Url}/events";
+                        var stream = httpClient.GetStreamAsync(requestUri).Result;
+
+                        using (var reader = new StreamReader(stream))
                         {
-                            if (_abortionRequested) break;
+                            var dataTemplate = new Regex(@"data:\s({.*})");
+                            while (!reader.EndOfStream)
+                            {
+                                if (_abortionRequested) break;
 
-                            var currentLine = reader.ReadLine();
-                            if (currentLine == null) continue;
+                                var currentLine = reader.ReadLine();
+                                if (currentLine == null) continue;
 
-                            var data = dataTemplate.Match(currentLine).Groups[1];
-                            if (!data.Success) continue;
+                                var data = dataTemplate.Match(currentLine).Groups[1];
+                                if (!data.Success) continue;
 
-                            RaiseEvent(data.Value);
+                                RaiseEvent(data.Value);
+                            }
                         }
                     }
-                }
-                Debug.WriteLine("Event Listener terminated.");
-            });
+                    Debug.WriteLine("Event Listener terminated.");
+                });
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Event Listener has been terminated unexpectedly.");
+                Thread.Sleep(1000);
+                Debug.WriteLine("Attempting to reestablish connection to the server...");
+                InitializeAsync();
+            }
+        }
+
+        ~EventService()
+        {
+            TerminateAsync();
         }
 
         public void TerminateAsync()
