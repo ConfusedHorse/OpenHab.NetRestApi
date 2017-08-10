@@ -62,6 +62,7 @@ namespace OpenHAB.NetRestApi.Helpers
         /// <returns>JSON as String</returns>
         public string Serialize(object obj)
         {
+            if (ContentType == "text/plain") return obj.ToString();
             using (var stringWriter = new StringWriter())
             {
                 using (var jsonTextWriter = new JsonTextWriter(stringWriter))
