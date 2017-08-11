@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using OpenHAB.NetRestApi.Models.Events;
 using OpenHAB.NetRestApi.RestApi;
 
 namespace OpenHAB.NetRestApi.Models
@@ -76,6 +77,43 @@ namespace OpenHAB.NetRestApi.Models
         {
             return Name;
         }
+
+        #region Event Handlers
+
+        // Note: this is experimental
+
+        public event ItemUpdatedEventHandler Updated;
+        public event ItemStateChangedEventHandler StateChanged;
+
+        public void InitializeEvents()
+        {
+            var eventService = OpenHab.RestClient.EventService;
+
+            eventService.ItemUpdated += EventServiceOnItemUpdated;
+            eventService.ItemStateChanged += EventServiceOnItemStateChanged;
+
+            if (!eventService.IsInitialized) eventService.InitializeAsync();
+        }
+
+        public void TerminateEvents()
+        {
+            var eventService = OpenHab.RestClient.EventService;
+
+            eventService.ItemUpdated -= EventServiceOnItemUpdated;
+            eventService.ItemStateChanged -= EventServiceOnItemStateChanged;
+        }
+
+        private void EventServiceOnItemUpdated(object sender, ItemUpdatedEvent eventObject)
+        {
+            if (eventObject.Target == Name) Updated?.Invoke(sender, eventObject);
+        }
+
+        private void EventServiceOnItemStateChanged(object sender, ItemStateChangedEvent eventObject)
+        {
+            if (eventObject.Target == Name) StateChanged?.Invoke(sender, eventObject);
+        }
+
+        #endregion
 
         #region Service Methods
 
