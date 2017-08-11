@@ -37,6 +37,9 @@ namespace OpenHAB.NetRestApi.Services
 
                         using (var reader = new StreamReader(stream))
                         {
+                            IsInitialized = true;
+                            Debug.WriteLine("Event Listener initialized.");
+
                             var dataTemplate = new Regex(@"data:\s({.*})");
                             while (!reader.EndOfStream)
                             {
@@ -57,12 +60,16 @@ namespace OpenHAB.NetRestApi.Services
             }
             catch (Exception)
             {
+                IsInitialized = false;
                 Debug.WriteLine("Event Listener has been terminated unexpectedly.");
+
                 Thread.Sleep(1000);
                 Debug.WriteLine("Attempting to reestablish connection to the server...");
                 InitializeAsync();
             }
         }
+
+        public bool IsInitialized { get; set; }
 
         ~EventService()
         {
@@ -71,6 +78,7 @@ namespace OpenHAB.NetRestApi.Services
 
         public void TerminateAsync()
         {
+            IsInitialized = false;
             _abortionRequested = true;
         }
 
@@ -80,6 +88,7 @@ namespace OpenHAB.NetRestApi.Services
 
             var json = Json.Fix(data);
             var type = typeTemplate.Match(data).Groups[1].Value;
+            //Debug.WriteLine($"{type} occured.");
 
             switch (type) //TODO this is not a complete list of events
             {

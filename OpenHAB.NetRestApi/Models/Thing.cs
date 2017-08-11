@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using OpenHAB.NetRestApi.Helpers;
 using OpenHAB.NetRestApi.RestApi;
 
 namespace OpenHAB.NetRestApi.Models
@@ -172,6 +173,18 @@ namespace OpenHAB.NetRestApi.Models
         public Thing UpdateChannelConfiguration()
         {
             return OpenHab.RestClient.ThingService.UpdateThingConfiguration(this);
+        }
+
+        /// <summary>
+        ///     Returns all items linked to this thing.
+        /// </summary>
+        /// <returns></returns>
+        public List<Item> GetLinkedItems()
+        {
+            var channelLinks = OpenHab.RestClient.LinkService.GetLinks();
+            var itemLinks = Channels.SelectMany(c => channelLinks.Where(cl => cl.ChannelUid == c.Uid));
+            var linkedItems = itemLinks.Distinct().Select(il => OpenHab.RestClient.ItemService.GetItem(il.ItemName));
+            return linkedItems.ToList();
         }
 
         #endregion
