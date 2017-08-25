@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using OpenHAB.NetRestApi.RestApi;
 
 namespace OpenHAB.NetRestApi.Client
@@ -18,6 +19,17 @@ namespace OpenHAB.NetRestApi.Client
             var success = openHab.TestConnection();
 
             //tests go here
+            var moduleTypeService = openHab.ModuleTypeService;
+            var ruleService = openHab.RuleService;
+
+            var triggers = moduleTypeService.GetTriggers();
+            var conditions = moduleTypeService.GetConditions();
+            var actions = moduleTypeService.GetActions();
+            
+            var rules = ruleService.GetRules();
+
+            var ruleTrigger = rules.First()?.Triggers.First();
+            var correspondingModuleType = ruleTrigger?.GetModuleType();
 
             Console.ReadLine();
         }

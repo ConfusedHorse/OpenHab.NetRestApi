@@ -1,17 +1,18 @@
 ﻿using Newtonsoft.Json;
+using OpenHAB.NetRestApi.RestApi;
 
 namespace OpenHAB.NetRestApi.Models
 {
-    public class Action
+    public class Action : ModuleType
     {
         [JsonProperty("id")]
         public string Id { get; set; }
 
-        [JsonProperty("label")]
-        public string Label { get; set; }
+        //[JsonProperty("label")]
+        //public string Label { get; set; }
 
-        [JsonProperty("description")]
-        public string Description { get; set; }
+        //[JsonProperty("description")]
+        //public string Description { get; set; }
 
         [JsonProperty("configuration")]
         public object Configuration { get; set; }
@@ -55,5 +56,15 @@ namespace OpenHAB.NetRestApi.Models
         {
             return Id;
         }
+
+        #region Service Methods
+
+        public ModuleType GetModuleType()
+        {
+            // Action.Type == ModuleType.Uid
+            return Type == null ? null : OpenHab.RestClient.ModuleTypeService.GetModuleType(Type);
+        }
+
+        #endregion
     }
 }

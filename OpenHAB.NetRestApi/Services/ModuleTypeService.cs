@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenHAB.NetRestApi.Constants;
@@ -75,27 +76,27 @@ namespace OpenHAB.NetRestApi.Services
         ///     Get all available module types of type "trigger"
         /// </summary>
         /// <returns></returns>
-        public List<ModuleType> GetTriggers()
+        public List<Trigger> GetTriggers()
         {
-            return GetModuleTypesAsync(RuleMemberType.trigger).Result;
+            return GetModuleTypesAsync<Trigger>(RuleMemberType.trigger).Result;
         }
 
         /// <summary>
         ///     Get all available module types of type "condition"
         /// </summary>
         /// <returns></returns>
-        public List<ModuleType> GetConditions()
+        public List<Condition> GetConditions()
         {
-            return GetModuleTypesAsync(RuleMemberType.condition).Result;
+            return GetModuleTypesAsync<Condition>(RuleMemberType.condition).Result;
         }
 
         /// <summary>
         ///     Get all available module types of type "action"
         /// </summary>
         /// <returns></returns>
-        public List<ModuleType> GetActions()
+        public List<Action> GetActions()
         {
-            return GetModuleTypesAsync(RuleMemberType.action).Result;
+            return GetModuleTypesAsync<Action>(RuleMemberType.action).Result;
         }
 
         /// <summary>
@@ -116,6 +117,26 @@ namespace OpenHAB.NetRestApi.Services
             var parameters = Resource.FormatParameters(typeParameter, tagsParameter);
             var resource = $"/module-types{parameters}";
             return OpenHab.RestClient.ExecuteRequestAsync<List<ModuleType>>(Method.GET, resource, token: token);
+        }
+
+        /// <summary>
+        ///     Get all available module types.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="tag"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        internal Task<List<T>> GetModuleTypesAsync<T>(RuleMemberType type, string tag = default(string),
+            CancellationToken token = default(CancellationToken))
+        {
+            var typeParameter = !string.IsNullOrWhiteSpace(type.ToString())
+                ? new ResourceParameter("type", type.ToString())
+                : null;
+            var tagsParameter = !string.IsNullOrWhiteSpace(tag) ? new ResourceParameter("tags", tag) : null;
+
+            var parameters = Resource.FormatParameters(typeParameter, tagsParameter);
+            var resource = $"/module-types{parameters}";
+            return OpenHab.RestClient.ExecuteRequestAsync<List<T>>(Method.GET, resource, token: token);
         }
 
         /// <summary>

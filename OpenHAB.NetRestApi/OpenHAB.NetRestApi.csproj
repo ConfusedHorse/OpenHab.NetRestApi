@@ -58,6 +58,7 @@
     <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\ChannelGroup.cs" />
     <Compile Include="Models\Events\ItemUpdatedEvent.cs" />
+    <Compile Include="Models\Output.cs" />
     <Compile Include="Models\Stream.cs" />
     <Compile Include="Models\Context.cs" />
     <Compile Include="Models\Header.cs" />
