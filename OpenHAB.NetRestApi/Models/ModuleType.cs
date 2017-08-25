@@ -8,6 +8,9 @@ namespace OpenHAB.NetRestApi.Models
         [JsonProperty("uid")]
         public string Uid { get; set; }
 
+        [JsonProperty("outputs")]
+        public List<Output> Outputs { get; set; }
+
         [JsonProperty("visibility")]
         public string Visibility { get; set; }
 
@@ -25,9 +28,9 @@ namespace OpenHAB.NetRestApi.Models
 
         protected bool Equals(ModuleType other)
         {
-            return string.Equals(Uid, other.Uid) && string.Equals(Visibility, other.Visibility) &&
-                   Equals(Tags, other.Tags) && string.Equals(Label, other.Label) &&
-                   string.Equals(Description, other.Description) &&
+            return string.Equals(Uid, other.Uid) && Equals(Outputs, other.Outputs) &&
+                   string.Equals(Visibility, other.Visibility) && Equals(Tags, other.Tags) &&
+                   string.Equals(Label, other.Label) && string.Equals(Description, other.Description) &&
                    Equals(ConfigDescriptions, other.ConfigDescriptions);
         }
 
@@ -44,6 +47,7 @@ namespace OpenHAB.NetRestApi.Models
             unchecked
             {
                 var hashCode = Uid != null ? Uid.GetHashCode() : 0;
+                hashCode = (hashCode * 397) ^ (Outputs != null ? Outputs.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Visibility != null ? Visibility.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Tags != null ? Tags.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Label != null ? Label.GetHashCode() : 0);
