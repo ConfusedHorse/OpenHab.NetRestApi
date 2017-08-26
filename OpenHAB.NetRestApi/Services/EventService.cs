@@ -14,7 +14,26 @@ namespace OpenHAB.NetRestApi.Services
 {
     public class EventService
     {
+        #region Fields
+
         private bool _abortionRequested;
+
+        #endregion
+
+        ~EventService()
+        {
+            TerminateAsync();
+        }
+
+        #region Properties
+
+        public bool OngoingInitialisation { get; set; }
+
+        public bool IsInitialized { get; set; }
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         ///     Initializes an asynchronous Rest prompt which is read and interpreted.
@@ -23,6 +42,10 @@ namespace OpenHAB.NetRestApi.Services
         public async void InitializeAsync()
         {
             _abortionRequested = false;
+
+            if (IsInitialized || OngoingInitialisation) return;
+            OngoingInitialisation = true;
+
             Debug.WriteLine("Initialize Event Listener...");
             await Task.Run(() =>
             {
@@ -35,6 +58,7 @@ namespace OpenHAB.NetRestApi.Services
 
                     using (var reader = new StreamReader(stream))
                     {
+                        OngoingInitialisation = false;
                         IsInitialized = true;
                         Debug.WriteLine("Event Listener initialized.");
 
@@ -57,22 +81,50 @@ namespace OpenHAB.NetRestApi.Services
             });
         }
 
-        public bool IsInitialized { get; set; }
-
-        ~EventService()
-        {
-            TerminateAsync();
-        }
-
         public void TerminateAsync()
         {
             IsInitialized = false;
             _abortionRequested = true;
         }
 
+        #endregion
+
+        #region EventHandlers
+
+        public event ItemStateEventHandler ItemStateEventOccured;
+        public event ItemStateChangedEventHandler ItemStateChanged;
+        public event ItemCommandEventHandler ItemCommandEventOccured;
+        public event ItemAddedEventHandler ItemAdded;
+        public event ItemRemovedEventHandler ItemRemoved;
+        public event ItemUpdatedEventHandler ItemUpdated;
+
+        public event ThingStatusInfoEventHandler ThingStatusInfoEventOccured;
+        public event ThingStatusInfoChangedEventHandler ThingStatusInfoChanged;
+        public event ThingAddedEventHandler ThingAdded;
+        public event ThingUpdatedEventHandler ThingUpdated;
+        public event ThingRemovedEventHandler ThingRemoved;
+        public event ItemChannelLinkAddedEventHandler ItemChannelLinkAdded;
+        public event ItemChannelLinkRemovedEventHandler ItemChannelLinkRemoved;
+
+        public event InboxAddedEventHandler InboxAdded;
+        public event InboxRemovedEventHandler InboxRemoved;
+
+        public event RuleStatusInfoEventHandler RuleStatusInfoEventOccured;
+        public event RuleAddedEventHandler RuleAdded;
+        public event RuleUpdatedEventHandler RuleUpdated;
+        public event RuleRemovedEventHandler RuleRemoved;
+
+        public event ConfigStatusInfoEventHandler ConfigStatusInfoEventOccured;
+        public event PlayUrlEventHandler PlayUrlEventOccured;
+        public event UnknownEventHandler UnknownEventOccured;
+
+        #endregion
+
+        #region Private Methods
+
         private void RaiseEvent(string data)
         {
-            var typeTemplate = new Regex(@",""type"":""(.*)""}");
+            var typeTemplate = new Regex(@",""type"":""(.*?)""}");
 
             var json = Json.Fix(data);
             var type = typeTemplate.Match(data).Groups[1].Value;
@@ -106,14 +158,6 @@ namespace OpenHAB.NetRestApi.Services
                     var itemUpdatedEvent = AssembleEvent<ItemUpdatedEvent>(json);
                     ItemUpdated?.Invoke(OpenHab.RestClient, itemUpdatedEvent);
                     break;
-                case "ItemChannelLinkAddedEvent":
-                    var itemChannelLinkAddedEvent = AssembleEvent<ItemChannelLinkAddedEvent>(json);
-                    ItemChannelLinkAdded?.Invoke(OpenHab.RestClient, itemChannelLinkAddedEvent);
-                    break;
-                case "ItemChannelLinkRemovedEvent":
-                    var itemChannelLinkRemovedEvent = AssembleEvent<ItemChannelLinkRemovedEvent>(json);
-                    ItemChannelLinkRemoved?.Invoke(OpenHab.RestClient, itemChannelLinkRemovedEvent);
-                    break;
 
                 #endregion
 
@@ -138,6 +182,14 @@ namespace OpenHAB.NetRestApi.Services
                 case "ThingRemovedEvent":
                     var thingRemovedEvent = AssembleEvent<ThingRemovedEvent>(json);
                     ThingRemoved?.Invoke(OpenHab.RestClient, thingRemovedEvent);
+                    break;
+                case "ItemChannelLinkAddedEvent":
+                    var itemChannelLinkAddedEvent = AssembleEvent<ItemChannelLinkAddedEvent>(json);
+                    ItemChannelLinkAdded?.Invoke(OpenHab.RestClient, itemChannelLinkAddedEvent);
+                    break;
+                case "ItemChannelLinkRemovedEvent":
+                    var itemChannelLinkRemovedEvent = AssembleEvent<ItemChannelLinkRemovedEvent>(json);
+                    ItemChannelLinkRemoved?.Invoke(OpenHab.RestClient, itemChannelLinkRemovedEvent);
                     break;
 
                 #endregion
@@ -198,43 +250,14 @@ namespace OpenHAB.NetRestApi.Services
         private static T AssembleEvent<T>(string json)
         {
             var timeOccured = DateTime.Now;
-            var targetTemplate = new Regex(@"smarthome/(.*)/(.*)/(.*)"); // group/target/action
+            var topicTemplate = new Regex(@"smarthome/(.*?)/(.*?)/(.*)"); // group/target/action
 
             dynamic eventObject = JsonConvert.DeserializeObject<T>(json);
-            eventObject.Target = targetTemplate.Match(eventObject.Topic).Groups[2].Value;
-            eventObject.Action = targetTemplate.Match(eventObject.Topic).Groups[3].Value;
+            eventObject.Target = topicTemplate.Match(eventObject.Topic).Groups[2].Value;
+            eventObject.Action = topicTemplate.Match(eventObject.Topic).Groups[3].Value;
             eventObject.Occured = timeOccured;
             return eventObject;
         }
-
-        #region EventHandlers
-
-        public event ItemStateEventHandler ItemStateEventOccured;
-        public event ItemStateChangedEventHandler ItemStateChanged;
-        public event ItemCommandEventHandler ItemCommandEventOccured;
-        public event ItemAddedEventHandler ItemAdded;
-        public event ItemRemovedEventHandler ItemRemoved;
-        public event ItemUpdatedEventHandler ItemUpdated;
-        public event ItemChannelLinkAddedEventHandler ItemChannelLinkAdded;
-        public event ItemChannelLinkRemovedEventHandler ItemChannelLinkRemoved;
-
-        public event ThingStatusInfoEventHandler ThingStatusInfoEventOccured;
-        public event ThingStatusInfoChangedEventHandler ThingStatusInfoChanged;
-        public event ThingAddedEventHandler ThingAdded;
-        public event ThingUpdatedEventHandler ThingUpdated;
-        public event ThingRemovedEventHandler ThingRemoved;
-
-        public event InboxAddedEventHandler InboxAdded;
-        public event InboxRemovedEventHandler InboxRemoved;
-
-        public event RuleStatusInfoEventHandler RuleStatusInfoEventOccured;
-        public event RuleAddedEventHandler RuleAdded;
-        public event RuleUpdatedEventHandler RuleUpdated;
-        public event RuleRemovedEventHandler RuleRemoved;
-
-        public event ConfigStatusInfoEventHandler ConfigStatusInfoEventOccured;
-        public event PlayUrlEventHandler PlayUrlEventOccured;
-        public event UnknownEventHandler UnknownEventOccured;
 
         #endregion
     }
