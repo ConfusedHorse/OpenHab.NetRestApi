@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Linq;
+using System.Diagnostics;
+using OpenHAB.NetRestApi.Models.Events;
 using OpenHAB.NetRestApi.RestApi;
 
 namespace OpenHAB.NetRestApi.Client
@@ -19,19 +20,26 @@ namespace OpenHAB.NetRestApi.Client
             var success = openHab.TestConnection();
 
             //tests go here
-            var moduleTypeService = openHab.ModuleTypeService;
-            var ruleService = openHab.RuleService;
+            var thingService = openHab.ThingService;
+            foreach (var thing in thingService.GetThings())
+            {
+                thing.ItemChannelLinkAdded += EventServiceOnItemChannelLinkAdded;
+                thing.ItemChannelLinkRemoved += EventServiceOnItemChannelLinkRemoved;
 
-            var triggers = moduleTypeService.GetTriggers();
-            var conditions = moduleTypeService.GetConditions();
-            var actions = moduleTypeService.GetActions();
-            
-            var rules = ruleService.GetRules();
-
-            var ruleTrigger = rules.First()?.Triggers.First();
-            var correspondingModuleType = ruleTrigger?.GetModuleType();
+                thing.InitializeEvents();
+            }
 
             Console.ReadLine();
+        }
+
+        private static void EventServiceOnItemChannelLinkAdded(object sender, ItemChannelLinkAddedEvent eventObject)
+        {
+            Debug.WriteLine(sender);
+        }
+
+        private static void EventServiceOnItemChannelLinkRemoved(object sender, ItemChannelLinkRemovedEvent eventObject)
+        {
+            Debug.WriteLine(sender);
         }
     }
 }

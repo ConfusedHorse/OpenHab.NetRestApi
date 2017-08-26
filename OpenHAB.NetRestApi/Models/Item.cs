@@ -105,12 +105,12 @@ namespace OpenHAB.NetRestApi.Models
 
         private void EventServiceOnItemUpdated(object sender, ItemUpdatedEvent eventObject)
         {
-            if (eventObject.Target == Name) Updated?.Invoke(sender, eventObject);
+            if (eventObject.Target == Name) Updated?.Invoke(this, eventObject);
         }
 
         private void EventServiceOnItemStateChanged(object sender, ItemStateChangedEvent eventObject)
         {
-            if (eventObject.Target == Name) StateChanged?.Invoke(sender, eventObject);
+            if (eventObject.Target == Name) StateChanged?.Invoke(this, eventObject);
         }
 
         #endregion

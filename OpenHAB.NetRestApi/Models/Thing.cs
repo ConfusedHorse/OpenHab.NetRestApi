@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using OpenHAB.NetRestApi.Helpers;
+using OpenHAB.NetRestApi.Models.Events;
 using OpenHAB.NetRestApi.RestApi;
 
 namespace OpenHAB.NetRestApi.Models
@@ -82,6 +84,53 @@ namespace OpenHAB.NetRestApi.Models
                 return hashCode;
             }
         }
+
+        #region Event Handlers
+
+        // Note: this is experimental
+
+        public event ThingUpdatedEventHandler Updated;
+        public event ItemChannelLinkAddedEventHandler ItemChannelLinkAdded;
+        public event ItemChannelLinkRemovedEventHandler ItemChannelLinkRemoved;
+
+        public void InitializeEvents()
+        {
+            var eventService = OpenHab.RestClient.EventService;
+
+            eventService.ThingUpdated += EventServiceOnThingUpdated;
+            eventService.ItemChannelLinkAdded += EventServiceOnItemChannelLinkAdded;
+            eventService.ItemChannelLinkRemoved += EventServiceOnItemChannelLinkRemoved;
+
+            eventService.InitializeAsync();
+        }
+
+        public void TerminateEvents()
+        {
+            var eventService = OpenHab.RestClient.EventService;
+
+            eventService.ThingUpdated -= EventServiceOnThingUpdated;
+            eventService.ItemChannelLinkAdded -= EventServiceOnItemChannelLinkAdded;
+            eventService.ItemChannelLinkRemoved -= EventServiceOnItemChannelLinkRemoved;
+        }
+
+        private void EventServiceOnThingUpdated(object sender, ThingUpdatedEvent eventObject)
+        {
+            if (eventObject.Target == Uid) Updated?.Invoke(this, eventObject);
+        }
+
+        private void EventServiceOnItemChannelLinkAdded(object sender, ItemChannelLinkAddedEvent eventObject)
+        {
+            if (Channels?.FirstOrDefault(c => c.Uid == eventObject.ChannelUid) != null)
+                ItemChannelLinkAdded?.Invoke(this, eventObject);
+        }
+
+        private void EventServiceOnItemChannelLinkRemoved(object sender, ItemChannelLinkRemovedEvent eventObject)
+        {
+            if (Channels?.FirstOrDefault(c => c.Uid == eventObject.ChannelUid) != null)
+                ItemChannelLinkRemoved?.Invoke(this, eventObject);
+        }
+
+        #endregion
 
         #region Service Methods
 
