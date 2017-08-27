@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using OpenHAB.NetRestApi.Models.Events;
 using OpenHAB.NetRestApi.RestApi;
 
 namespace OpenHAB.NetRestApi.Models
@@ -90,6 +92,35 @@ namespace OpenHAB.NetRestApi.Models
         {
             return Uid;
         }
+
+        #region Event Handlers
+
+        // Note: this is experimental
+
+        public event RuleUpdatedEventHandler Updated;
+
+        public void InitializeEvents()
+        {
+            var eventService = OpenHab.RestClient.EventService;
+
+            eventService.RuleUpdated += EventServiceOnRuleUpdated;
+
+            eventService.InitializeAsync();
+        }
+
+        public void TerminateEvents()
+        {
+            var eventService = OpenHab.RestClient.EventService;
+
+            eventService.RuleUpdated -= EventServiceOnRuleUpdated;
+        }
+
+        private void EventServiceOnRuleUpdated(object sender, RuleUpdatedEvent eventObject)
+        {
+            if (eventObject.OldRule.Uid == Uid) Updated?.Invoke(this, eventObject);
+        }
+
+        #endregion
 
         #region Service Methods
 
