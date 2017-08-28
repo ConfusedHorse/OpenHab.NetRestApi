@@ -17,8 +17,9 @@ namespace OpenHAB.NetRestApi.Services
         #region Fields
 
         private bool _abortionRequested;
-        private DateTime? _firstReconnectAttempt = null;
-        private int _attempts = 0;
+        private DateTime? _firstReconnectAttempt;
+        private DateTime? _currentConnectionStarted;
+        private int _attempts;
 
         #endregion
 
@@ -50,6 +51,7 @@ namespace OpenHAB.NetRestApi.Services
 
             if (IsInitialized || OngoingInitialisation) return;
             OngoingInitialisation = true;
+            _currentConnectionStarted = null;
 
             Debug.WriteLine("Initialize Event Listener...");
             await Task.Run(() =>
@@ -68,6 +70,7 @@ namespace OpenHAB.NetRestApi.Services
                             IsInitialized = true;
                             AttemptedReconnect?.Invoke(this, new AttemptedReconnectEvent(-1));
                             Debug.WriteLine("Event Listener initialized.");
+                            _currentConnectionStarted = DateTime.Now;
 
                             var dataTemplate = new Regex(@"data:\s({.*})");
                             while (!_abortionRequested)
@@ -103,7 +106,8 @@ namespace OpenHAB.NetRestApi.Services
                         UnexpectedTermination(e);
                     }
                 }
-                Debug.WriteLine("Event Listener terminated.");
+                var secondsOfActiveConnection = (DateTime.Now - (_currentConnectionStarted ?? DateTime.Now)).TotalSeconds;
+                Debug.WriteLine($"Event Listener terminated after {secondsOfActiveConnection} seconds.");
             });
         }
 
