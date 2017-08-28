@@ -13,6 +13,12 @@ namespace OpenHAB.NetRestApi.Models
         [JsonProperty("description")]
         public string Description { get; set; }
 
+        public static StatusInfo Default => new StatusInfo
+        {
+            Status = "DISABLED",
+            StatusDetail = "NONE"
+        };
+
         protected bool Equals(StatusInfo other)
         {
             return string.Equals(Status, other.Status) && string.Equals(StatusDetail, other.StatusDetail) &&
