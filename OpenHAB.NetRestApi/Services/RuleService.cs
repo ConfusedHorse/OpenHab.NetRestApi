@@ -403,7 +403,7 @@ namespace OpenHAB.NetRestApi.Services
         /// <returns></returns>
         public string UpdateRule(Rule rule)
         {
-            return CreateRuleAsync(rule).Result.Content;
+            return UpdateRuleAsync(rule).Result.Content;
         }
 
         /// <summary>
