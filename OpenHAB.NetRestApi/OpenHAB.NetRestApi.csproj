@@ -57,6 +57,8 @@
     <Compile Include="Models\Binding.cs" />
     <Compile Include="Models\Channel.cs" />
     <Compile Include="Models\ChannelGroup.cs" />
+    <Compile Include="Models\Events\AttemptedReconnect.cs" />
+    <Compile Include="Models\Events\TerminatedUnexpectedlyEvent.cs" />
     <Compile Include="Models\Events\ItemUpdatedEvent.cs" />
     <Compile Include="Models\Output.cs" />
     <Compile Include="Models\Stream.cs" />

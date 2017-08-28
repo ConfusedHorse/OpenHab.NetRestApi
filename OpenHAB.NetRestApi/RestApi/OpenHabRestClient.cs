@@ -128,7 +128,15 @@ namespace OpenHAB.NetRestApi.RestApi
             return Task.Run(() =>
             {
                 var task = ExecuteRequestAsync(method, resource, requestBody, requestHeaders, token);
-                return JsonConvert.DeserializeObject<T>(task.Result.Content);
+                try
+                {
+                    return JsonConvert.DeserializeObject<T>(task.Result.Content);
+                }
+                catch (Exception e)
+                {
+                    EventService.UnexpectedTermination(e);
+                    return default(T);
+                }
             }, token);
         }
 

@@ -17,6 +17,8 @@ namespace OpenHAB.NetRestApi.Services
         #region Fields
 
         private bool _abortionRequested;
+        private DateTime? _firstReconnectAttempt = null;
+        private int _attempts = 0;
 
         #endregion
 
@@ -31,6 +33,8 @@ namespace OpenHAB.NetRestApi.Services
 
         public bool IsInitialized { get; set; }
 
+        public bool AutoReconnect { get; set; }
+
         #endregion
 
         #region Public Methods
@@ -39,9 +43,10 @@ namespace OpenHAB.NetRestApi.Services
         ///     Initializes an asynchronous Rest prompt which is read and interpreted.
         ///     Results can be aquired by listening to the relevant event
         /// </summary>
-        public async void InitializeAsync()
+        public async void InitializeAsync(bool autoreconnect = true)
         {
             _abortionRequested = false;
+            AutoReconnect = autoreconnect;
 
             if (IsInitialized || OngoingInitialisation) return;
             OngoingInitialisation = true;
@@ -54,31 +59,103 @@ namespace OpenHAB.NetRestApi.Services
                 {
                     httpClient.Timeout = TimeSpan.FromMilliseconds(Timeout.Infinite);
                     var requestUri = $"{OpenHab.RestClient.Url}/events";
-                    var stream = httpClient.GetStreamAsync(requestUri).Result;
-
-                    using (var reader = new StreamReader(stream))
+                    try
                     {
-                        OngoingInitialisation = false;
-                        IsInitialized = true;
-                        Debug.WriteLine("Event Listener initialized.");
+                        var stream = httpClient.GetStreamAsync(requestUri).Result;
 
-                        var dataTemplate = new Regex(@"data:\s({.*})");
-                        while (!reader.EndOfStream)
+                        using (var reader = new StreamReader(stream))
                         {
-                            if (_abortionRequested) break;
+                            IsInitialized = true;
+                            AttemptedReconnect?.Invoke(this, new AttemptedReconnectEvent(-1));
+                            Debug.WriteLine("Event Listener initialized.");
 
-                            var currentLine = reader.ReadLine();
-                            if (currentLine == null) continue;
+                            var dataTemplate = new Regex(@"data:\s({.*})");
+                            while (!_abortionRequested)
+                            {
+                                try
+                                {
+                                    if (reader.EndOfStream)
+                                    {
+                                        TerminateAsync();
+                                        break;
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    UnexpectedTermination(e);
+                                    break;
+                                }
 
-                            var data = dataTemplate.Match(currentLine).Groups[1];
-                            if (!data.Success) continue;
+                                if (_abortionRequested) break;
 
-                            RaiseEvent(data.Value);
+                                var currentLine = reader.ReadLine();
+                                if (currentLine == null) continue;
+
+                                var data = dataTemplate.Match(currentLine).Groups[1];
+                                if (!data.Success) continue;
+
+                                RaiseEvent(data.Value);
+                            }
                         }
+                    }
+                    catch (AggregateException e)
+                    {
+                        UnexpectedTermination(e);
                     }
                 }
                 Debug.WriteLine("Event Listener terminated.");
             });
+        }
+
+        internal void UnexpectedTermination(Exception exception)
+        {
+            TerminateAsync();
+            OngoingInitialisation = false;
+
+            if (AutoReconnect)
+            {
+                Debug.WriteLine($"{exception.GetType()} occured.");
+                if (_firstReconnectAttempt == null) _firstReconnectAttempt = DateTime.Now;
+                if (((DateTime)_firstReconnectAttempt).AddMinutes(1) < DateTime.Now)
+                {
+                    _abortionRequested = false;
+                    _attempts = 0;
+                    _firstReconnectAttempt = null;
+
+                    Debug.WriteLine("Attempting to reconnect...");
+                    AttemptedReconnect?.Invoke(this, new AttemptedReconnectEvent(_attempts));
+                    InitializeAsync();
+                }
+                else //recently attempted to reconnect
+                {
+                    _attempts++;
+                    Debug.WriteLine($"Attempting to reconnect... {_attempts}");
+                    AttemptedReconnect?.Invoke(this, new AttemptedReconnectEvent(_attempts));
+
+                    if (_attempts >= 3)
+                    {
+                        _abortionRequested = true;
+                        _attempts = 0;
+                        _firstReconnectAttempt = null;
+
+                        Debug.WriteLine($"Too many reconnection attempts ({_attempts})");
+                        Debug.WriteLine($"Event subscription will be terminated. ({_attempts})");
+                        TerminatedUnexpectedly?.Invoke(this, new TerminatedUnexpectedlyEvent(exception));
+                        Debug.WriteLine("New initialisation required.");
+                    }
+                    else
+                    {
+                        InitializeAsync();
+                    }
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"Event subscription will be terminated. ({_attempts})");
+                TerminatedUnexpectedly?.Invoke(this, new TerminatedUnexpectedlyEvent(exception));
+                AutoReconnect = false;
+                Debug.WriteLine("New initialisation required.");
+            }
         }
 
         public void TerminateAsync()
@@ -90,6 +167,9 @@ namespace OpenHAB.NetRestApi.Services
         #endregion
 
         #region EventHandlers
+
+        public event TerminatedUnexpectedlyEventHandler TerminatedUnexpectedly;
+        public event AttemptedReconnectEventHandler AttemptedReconnect;
 
         public event ItemStateEventHandler ItemStateEventOccured;
         public event ItemStateChangedEventHandler ItemStateChanged;
