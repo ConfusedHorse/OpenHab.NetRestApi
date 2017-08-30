@@ -336,11 +336,19 @@ namespace OpenHAB.NetRestApi.Services
             var timeOccured = DateTime.Now;
             var topicTemplate = new Regex(@"smarthome/(.*?)/(.*?)/(.*)"); // group/target/action
 
-            dynamic eventObject = JsonConvert.DeserializeObject<T>(json.Replace(@"\\", @"\"));
-            eventObject.Target = topicTemplate.Match(eventObject.Topic).Groups[2].Value;
-            eventObject.Action = topicTemplate.Match(eventObject.Topic).Groups[3].Value;
-            eventObject.Occured = timeOccured;
-            return eventObject;
+            try
+            {
+                dynamic eventObject = JsonConvert.DeserializeObject<T>(json.Replace(@"\\", @"\"));
+                eventObject.Target = topicTemplate.Match(eventObject.Topic).Groups[2].Value;
+                eventObject.Action = topicTemplate.Match(eventObject.Topic).Groups[3].Value;
+                eventObject.Occured = timeOccured;
+                return eventObject;
+            }
+            catch (Exception e)
+            {
+                //TODO repair json
+                return default(T);
+            }
         }
 
         #endregion
