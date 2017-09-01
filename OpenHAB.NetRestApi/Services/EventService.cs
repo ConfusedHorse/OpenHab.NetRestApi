@@ -106,7 +106,9 @@ namespace OpenHAB.NetRestApi.Services
                         UnexpectedTermination(e);
                     }
                 }
-                var secondsOfActiveConnection = (DateTime.Now - (_currentConnectionStarted ?? DateTime.Now)).TotalSeconds;
+
+                if (_currentConnectionStarted == null) return;
+                var secondsOfActiveConnection = (DateTime.Now - _currentConnectionStarted.Value).TotalSeconds;
                 Debug.WriteLine($"Event Listener terminated after {secondsOfActiveConnection} seconds.");
             });
         }
@@ -115,6 +117,9 @@ namespace OpenHAB.NetRestApi.Services
         {
             TerminateAsync();
             OngoingInitialisation = false;
+
+            var secondsOfActiveConnection = (DateTime.Now - (_currentConnectionStarted ?? DateTime.Now)).TotalSeconds;
+            Debug.WriteLine($"Event Listener terminated unexpectedly after {secondsOfActiveConnection} seconds.");
 
             if (AutoReconnect)
             {
@@ -338,7 +343,7 @@ namespace OpenHAB.NetRestApi.Services
 
             try
             {
-                dynamic eventObject = JsonConvert.DeserializeObject<T>(json.Replace(@"\\", @"\"));
+                dynamic eventObject = JsonConvert.DeserializeObject<T>(json);
                 eventObject.Target = topicTemplate.Match(eventObject.Topic).Groups[2].Value;
                 eventObject.Action = topicTemplate.Match(eventObject.Topic).Groups[3].Value;
                 eventObject.Occured = timeOccured;
