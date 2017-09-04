@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package >
+    <metadata>
+		<id>OpenHAB.NetRestApi</id>
+		<version>0.1.3</version>
+		<title>OpenHAB.NetRestApi</title>
+		<authors>Jörg Flechsig</authors>
+		<owners>Jörg Flechsig</owners>
+		<licenseUrl>https://github.com/ConfusedHorse/OpenHAB.NetRestApi/blob/master/LICENSE</licenseUrl>
+		<projectUrl>https://github.com/ConfusedHorse/OpenHAB.NetRestApi</projectUrl>
+		<!--<iconUrl>none</iconUrl>-->
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>A .Net REST client for the home automation framework OpenHAB</description>
+		<releaseNotes>initial release</releaseNotes>
+		<copyright>Copyright 2017</copyright>
+		<tags>OpenHAB REST .NET</tags>
+		<dependencies>
+			<dependency id="Newtonsoft.Json" version="10.0.3"/>
+			<dependency id="RestSharp" version="105.2.3"/>
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="bin\Debug\OpenHAB.NetRestApi.dll" target="lib\net452" />
+	</files>
+</package>
