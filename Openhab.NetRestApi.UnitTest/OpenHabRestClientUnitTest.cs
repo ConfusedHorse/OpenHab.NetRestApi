@@ -26,6 +26,7 @@ namespace Openhab.NetRestApi.UnitTest
             _testClient = OpenHab.CreateRestClient(Url, StartEventService);
         }
 
+        [TestCleanup]
         public void TerminateConnection()
         {
             _testClient.EventService.TerminateAsync();
