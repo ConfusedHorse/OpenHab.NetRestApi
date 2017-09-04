@@ -36,7 +36,8 @@ namespace OpenHAB.NetRestApi.Services
         /// <returns></returns>
         public Thing GetThing(string uid)
         {
-            return GetThingAsync(uid).Result;
+            var thing = GetThingAsync(uid).Result;
+            return thing?.Uid == null ? null : thing;
         }
 
         /// <summary>
