@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,7 +18,7 @@ namespace Openhab.NetRestApi.UnitTest
         private OpenHabRestClient _testClient;
 
         private const int ShortDelay = 100;
-        private const int LongDelay = 500;
+        private const int LongDelay = 1000; // assuming lazy server
 
         [TestInitialize]
         public void InitializeConnection()
@@ -45,6 +46,17 @@ namespace Openhab.NetRestApi.UnitTest
             var triggers = _testClient.ModuleTypeService.GetTriggers();
             var triggersCount = triggers.Count;
 
+            /* Expects:
+             *   timer.TimeOfDayTrigger
+             *   jsr223.ScriptedTrigger
+             *   timer.GenericCronTrigger
+             *   core.ItemCommandTrigger
+             *   core.GenericEventTrigger
+             *   core.ItemStateUpdateTrigger
+             *   core.ItemStateChangeTrigger
+             *   core.ChannelEventTrigger
+             */
+
             Assert.AreEqual(8, triggersCount);
         }
 
@@ -54,6 +66,15 @@ namespace Openhab.NetRestApi.UnitTest
             var conditions = _testClient.ModuleTypeService.GetConditions();
             var conditionsCount = conditions.Count;
 
+            /* Expects:
+             *   core.GenericEventCondition
+             *   script.ScriptCondition
+             *   timer.DayOfWeekCondition
+             *   jsr223.ScriptedCondition
+             *   core.ItemStateCondition
+             *   core.GenericCompareCondition
+             */
+
             Assert.AreEqual(6, conditionsCount);
         }
 
@@ -62,6 +83,16 @@ namespace Openhab.NetRestApi.UnitTest
         {
             var actions = _testClient.ModuleTypeService.GetActions();
             var actionsCount = actions.Count;
+
+            /* Expects:
+             *   media.PlayAction
+             *   core.ItemCommandAction
+             *   media.SayAction
+             *   jsr223.ScriptedAction
+             *   script.ScriptAction
+             *   core.RunRuleAction
+             *   core.RuleEnablementAction
+             */
 
             Assert.AreEqual(7, actionsCount);
         }
